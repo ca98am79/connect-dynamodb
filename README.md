@@ -10,12 +10,10 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 ## Options
   
   - `client` An existing dynamodb client object you normally get from `dynamodb.createClient()`
-  - `host` DynamoDB server hostname
-  - `port` DynamoDB server portno
-  - `db` Database index to use
-  - `pass` Password for DynamoDB authentication
+  - `table` DynamoDB server session table
+  - `accessKeyId` AWS accessKeyId
+  - `secretAccessKey` AWS secretAccessKey
   - `prefix` Key prefix defaulting to "sess:"
-  - ...    Remaining options passed to the dynamodb `createClient()` method.
 
 ## Usage
 

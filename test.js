@@ -8,7 +8,7 @@ var assert = require('assert')
   , DynamoDBStore = require('./')(connect);
 
 var store = new DynamoDBStore;
-var store_alt = new DynamoDBStore({ db: 15 });
+var store_alt = new DynamoDBStore({accessKeyId: process.env.AWSAccessKey, secretAccessKey: process.env.SecretAccessKey});
 
 store.client.on('connect', function(){
   // #set()
