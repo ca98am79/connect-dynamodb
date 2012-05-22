@@ -9,7 +9,7 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 
 ## Options
   
-  - `client` An existing dynamodb client object you normally get from `dynamodb.createClient()`
+  - `client` An existing dynode client object you normally get from `var client = new (dynode.Client)({accessKeyId: "AWSAccessKey", secretAccessKey: "SecretAccessKey"});`
   - `table` DynamoDB server session table
   - `accessKeyId` AWS accessKeyId
   - `secretAccessKey` AWS secretAccessKey
@@ -25,10 +25,10 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 	  table: 'myapp-sessions',
 	
 	  // AWSAccessKey
-	  accessKeyId: 'my-aws-key',
+	  accessKeyId: 'AWSAccessKey',
 	  
 	  // AWS secretAccessKey
-	  secretAccessKey: 'my-secret-aws-key'
+	  secretAccessKey: 'SecretAccessKey'
 	});
 	
     var server = connect.createServer();
@@ -41,10 +41,10 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 	  table: 'myapp-sessions',
 	
 	  // AWSAccessKey
-	  accessKeyId: 'my-aws-key',
+	  accessKeyId: 'AWSAccessKey',
 	  
 	  // AWS secretAccessKey
-	  secretAccessKey: 'my-secret-aws-key'
+	  secretAccessKey: 'SecretAccessKey'
 	});
 	
     var app = express.createServer(
