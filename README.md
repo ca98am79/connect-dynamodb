@@ -9,7 +9,7 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 
 ## Options
   
-  - `client` An existing dynode client object you normally get from `var client = new (dynode.Client)({accessKeyId: "AWSAccessKey", secretAccessKey: "SecretAccessKey"});`
+  - `client` An existing dynode client object you normally get from `new (dynode.Client)({accessKeyId: "AWSAccessKey", secretAccessKey: "SecretAccessKey"});`
   - `table` DynamoDB server session table
   - `accessKeyId` AWS accessKeyId
   - `secretAccessKey` AWS secretAccessKey
