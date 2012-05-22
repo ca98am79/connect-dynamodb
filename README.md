@@ -13,21 +13,30 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
   - `table` DynamoDB server session table
   - `accessKeyId` AWS accessKeyId
   - `secretAccessKey` AWS secretAccessKey
-  - `prefix` Key prefix defaulting to "sess:"
+  - `prefix` Key prefix defaulting to "sess"
 
 ## Usage
 
- Due to npm 1.x changes, we now need to pass connect to the function `connect-dynamodb` exports in order to extend `connect.session.Store`:
-
     var connect = require('connect')
 	 	  , DynamoDBStore = require('connect-dynamodb')(connect);
+	 	  
+	var store = new DynamoDBStore({
+	  // Name of the table you would like to use for sessions.
+	  table: 'myapp-sessions',
+	
+	  // AWSAccessKey
+	  accessKeyId: 'my-aws-key',
+	  
+	  // AWS secretAccessKey
+	  secretAccessKey: 'my-secret-aws-key'
+	});
+	
+    var server = connect.createServer();
+	server.use(connect.session({secret: 'YourSecretKey', store: store });
 
-    connect.createServer(
-      connect.cookieParser(),
-      // 5 minutes
-      connect.session({ store: new DynamoDBStore, secret: 'keyboard cat' })
-    );
-
- This means express users may do the following, since `express.session.Store` points to the `connect.session.Store` function:
+ Or with [express](http://expressjs.com/)
  
-    var DynamoDBStore = require('connect-dynamodb')(express);
+    var app = express.createServer(
+		  express.cookieParser()
+		, express.session({ secret: 'YourSecretKey', store: store)
+	  );
