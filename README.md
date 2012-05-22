@@ -35,7 +35,18 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 	server.use(connect.session({secret: 'YourSecretKey', store: store });
 
  Or with [express](http://expressjs.com/)
- 
+ 	
+ 	var store = new DynamoDBStore({
+	  // Name of the table you would like to use for sessions.
+	  table: 'myapp-sessions',
+	
+	  // AWSAccessKey
+	  accessKeyId: 'my-aws-key',
+	  
+	  // AWS secretAccessKey
+	  secretAccessKey: 'my-secret-aws-key'
+	});
+	
     var app = express.createServer(
 		  express.cookieParser()
 		, express.session({ secret: 'YourSecretKey', store: store)
