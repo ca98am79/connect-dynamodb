@@ -14,6 +14,7 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
   - `accessKeyId` AWS accessKeyId
   - `secretAccessKey` AWS secretAccessKey
   - `prefix` Key prefix defaulting to "sess"
+  - `reapInterval` How often expired sessions should be cleaned up
 
 ## Usage
 
@@ -29,6 +30,10 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 	  
 	  // AWS secretAccessKey
 	  secretAccessKey: 'SecretAccessKey'
+	  
+	  // Optional. How often expired sessions should be cleaned up.
+  	  // Defaults to 600000 (10 minutes).
+  	  reapInterval: 600000,
 	});
 	
     var server = connect.createServer();
