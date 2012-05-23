@@ -1,10 +1,10 @@
 {
   "name": "connect-dynamodb",
   "description": "DynamoDB session store for Connect",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "author": "Mike Carson <ca98am79@gmail.com>",
   "main": "./index.js",
-  "dependencies": { "dynode": "*", "debug": "*" },
+  "dependencies": { "dynode": "*"},
   "devDependencies": { "connect": "*" },
   "engines": { "node": "*" }
 }
