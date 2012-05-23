@@ -4,7 +4,7 @@
   "version": "0.0.2",
   "author": "Mike Carson <ca98am79@gmail.com>",
   "main": "./index.js",
-  "dependencies": { "dynamodb": "*", "debug": "*" },
+  "dependencies": { "dynode": "*", "debug": "*" },
   "devDependencies": { "connect": "*" },
   "engines": { "node": "*" }
 }
