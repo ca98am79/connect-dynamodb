@@ -1,0 +1,99 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
+info using npm@1.1.21
+info using node@v0.6.17
+verbose config file /Users/alancarson/.npmrc
+verbose config file /usr/local/etc/npmrc
+verbose config file /usr/local/lib/node_modules/npm/npmrc
+verbose publish [ '.' ]
+verbose caching /Users/alancarson/Documents/connect-dynamodb/package.json
+verbose loadDefaults connect-dynamodb@0.0.1
+info prepublish connect-dynamodb@0.0.1
+verbose cache add [ '.', null ]
+silly cache add: name, spec, args [ undefined, '.', [ '.', null ] ]
+verbose parsed url { pathname: '.', path: '.', href: '.' }
+verbose caching package.json
+verbose loadDefaults connect-dynamodb@0.0.1
+verbose tar.pack [ '/var/folders/EL/ELe9MiN+GVewyjUspZ0qpE+++TI/-Tmp-/npm-1337784973733/1337784973733-0.6651575700379908/tmp.tgz',
+verbose tar.pack   '.' ]
+verbose tarball /var/folders/EL/ELe9MiN+GVewyjUspZ0qpE+++TI/-Tmp-/npm-1337784973733/1337784973733-0.6651575700379908/tmp.tgz
+verbose folder .
+verbose unpack /var/folders/EL/ELe9MiN+GVewyjUspZ0qpE+++TI/-Tmp-/npm-1337784973733/1337784973733-0.6651575700379908/tmp.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry package.json
+silly extracting entry index.js
+silly extracting entry test.js
+silly extracting entry History.md
+silly extracting entry lib/connect-dynamodb.js
+silly extracting entry Makefile
+silly extracting entry Readme.md
+verbose caching /var/folders/EL/ELe9MiN+GVewyjUspZ0qpE+++TI/-Tmp-/npm-1337784973733/1337784973733-0.6651575700379908/package/package.json
+verbose loadDefaults connect-dynamodb@0.0.1
+verbose from cache /var/folders/EL/ELe9MiN+GVewyjUspZ0qpE+++TI/-Tmp-/npm-1337784973733/1337784973733-0.6651575700379908/package/package.json
+verbose tar.pack [ '/Users/alancarson/.npm/connect-dynamodb/0.0.1/package.tgz',
+verbose tar.pack   '/var/folders/EL/ELe9MiN+GVewyjUspZ0qpE+++TI/-Tmp-/npm-1337784973733/1337784973733-0.6651575700379908/package' ]
+verbose tarball /Users/alancarson/.npm/connect-dynamodb/0.0.1/package.tgz
+verbose folder /var/folders/EL/ELe9MiN+GVewyjUspZ0qpE+++TI/-Tmp-/npm-1337784973733/1337784973733-0.6651575700379908/package
+verbose unpack /Users/alancarson/.npm/connect-dynamodb/0.0.1/package.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry package.json
+silly extracting entry index.js
+silly extracting entry test.js
+silly extracting entry History.md
+silly extracting entry lib/connect-dynamodb.js
+silly extracting entry Makefile
+silly extracting entry Readme.md
+verbose caching /Users/alancarson/.npm/connect-dynamodb/0.0.1/package/package.json
+verbose loadDefaults connect-dynamodb@0.0.1
+silly updated sha bytes 2903
+info shasum c3e99b502e88607d44e537acbab310572c6e557c
+info shasum /Users/alancarson/.npm/connect-dynamodb/0.0.1/package.tgz
+verbose from cache /Users/alancarson/.npm/connect-dynamodb/0.0.1/package/package.json
+verbose chmod /Users/alancarson/.npm/connect-dynamodb/0.0.1/package.tgz 644
+verbose chown [ '/Users/alancarson/.npm/connect-dynamodb/0.0.1/package.tgz',
+verbose chown   501,
+verbose chown   20 ]
+silly publish { name: 'connect-dynamodb',
+silly publish   description: 'DynamoDB session store for Connect',
+silly publish   version: '0.0.1',
+silly publish   author: { name: 'Mike Carson', email: 'ca98am79@gmail.com' },
+silly publish   main: './index.js',
+silly publish   dependencies: { dynamodb: '*', debug: '*' },
+silly publish   devDependencies: { connect: '*' },
+silly publish   engines: { node: '*' },
+silly publish   _npmUser: { name: 'ca98am79', email: 'ca98am79@gmail.com' },
+silly publish   _id: 'connect-dynamodb@0.0.1',
+silly publish   optionalDependencies: {},
+silly publish   _engineSupported: true,
+silly publish   _npmVersion: '1.1.21',
+silly publish   _nodeVersion: 'v0.6.17',
+silly publish   _defaultsLoaded: true,
+silly publish   dist: 
+silly publish    { shasum: 'c3e99b502e88607d44e537acbab310572c6e557c',
+silly publish      tarball: 'http://registry.npmjs.org/connect-dynamodb/-/connect-dynamodb-0.0.1.tgz' } }
+verbose raw, before any munging connect-dynamodb
+verbose url resolving [ 'https://registry.npmjs.org/', './connect-dynamodb' ]
+verbose url resolved https://registry.npmjs.org/connect-dynamodb
+http PUT https://registry.npmjs.org/connect-dynamodb
+http 409 https://registry.npmjs.org/connect-dynamodb
+verbose raw, before any munging connect-dynamodb
+verbose url resolving [ 'https://registry.npmjs.org/', './connect-dynamodb' ]
+verbose url resolved https://registry.npmjs.org/connect-dynamodb
+http GET https://registry.npmjs.org/connect-dynamodb
+http 200 https://registry.npmjs.org/connect-dynamodb
+info Already published connect-dynamodb@0.0.1
+verbose uploading bin dists []
+ERR! publish fail Cannot publish over existing version.
+ERR! publish fail Bump the 'version' field, set the --force flag, or
+ERR! publish fail     npm unpublish 'connect-dynamodb@0.0.1'
+ERR! publish fail and try again
+ERR! 
+ERR! System Darwin 10.8.0
+ERR! command "node" "/usr/local/bin/npm" "publish"
+ERR! cwd /Users/alancarson/Documents/connect-dynamodb
+ERR! node -v v0.6.17
+ERR! npm -v 1.1.21
+ERR! code EPUBLISHCONFLICT
+ERR! message publish fail
+ERR! errno {}
+verbose exit [ 1, true ]
