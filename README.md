@@ -63,7 +63,7 @@ Improve tests
 
 ## Contributors
 
-Some people have have added features and fixed bugs in `connect-dynamodb` other than me.
+Some people that have added features and fixed bugs in `connect-dynamodb` other than me.
 
 * [Eric Abouaf](https://github.com/neyric)
 
