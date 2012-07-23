@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Connect-dynamodb by ca98am79</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Connect-dynamodb</h1>
+        <p>DynamoDB session store for Connect</p>
+
+        <p class="view"><a href="https://github.com/ca98am79/connect-dynamodb">View the Project on GitHub <small>ca98am79/connect-dynamodb</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/ca98am79/connect-dynamodb/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ca98am79/connect-dynamodb/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ca98am79/connect-dynamodb">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Connect DynamoDB</h1>
+
+<p>connect-dynamodb is a DynamoDB session store backed by <a href="https://github.com/Wantworthy/dynode">dynode</a></p>
+
+<h2>Installation</h2>
+
+<pre><code>  $ npm install connect-dynamodb
+</code></pre>
+
+<h2>Options</h2>
+
+<ul>
+<li>
+<code>client</code> An existing dynode client object you normally get from <code>new (dynode.Client)({accessKeyId: "AWSAccessKey", secretAccessKey: "SecretAccessKey"});</code>
+</li>
+<li>
+<code>table</code> DynamoDB server session table name</li>
+<li>
+<code>accessKeyId</code> AWS accessKeyId</li>
+<li>
+<code>secretAccessKey</code> AWS secretAccessKey</li>
+<li>
+<code>prefix</code> Key prefix defaulting to "sess"</li>
+<li>
+<code>reapInterval</code> How often expired sessions should be cleaned up</li>
+</ul><h2>Usage</h2>
+
+<pre><code>var connect = require('connect')
+      , DynamoDBStore = require('connect-dynamodb')(connect);
+
+var store = new DynamoDBStore({
+  // Name of the table you would like to use for sessions.
+  table: 'myapp-sessions',
+
+  // AWSAccessKey
+  accessKeyId: 'AWSAccessKey',
+
+  // AWS secretAccessKey
+  secretAccessKey: 'SecretAccessKey',
+
+  // Optional. How often expired sessions should be cleaned up.
+  // Defaults to 600000 (10 minutes).
+  reapInterval: 600000
+});
+
+var server = connect.createServer();
+server.use(connect.session({secret: 'YourSecretKey', store: store });
+</code></pre>
+
+<p>Or with <a href="http://expressjs.com/">express</a></p>
+
+<pre><code>var store = new DynamoDBStore({
+  // Name of the table you would like to use for sessions.
+  table: 'myapp-sessions',
+
+  // AWSAccessKey
+  accessKeyId: 'AWSAccessKey',
+
+  // AWS secretAccessKey
+  secretAccessKey: 'SecretAccessKey'
+});
+
+var app = express.createServer(
+      express.cookieParser()
+    , express.session({ secret: 'YourSecretKey', store: store)
+  );
+</code></pre>
+
+<h2>Contributors</h2>
+
+<p>Some people that have added features and fixed bugs in <code>connect-dynamodb</code> other than me.</p>
+
+<ul>
+<li><a href="https://github.com/neyric">Eric Abouaf</a></li>
+</ul><p>Thanks!</p>
+
+<h2>LICENSE - "MIT License"</h2>
+
+<p>Copyright (c) 2012 Mike Carson, <a href="http://ca98am79.com/">http://ca98am79.com/</a></p>
+
+<p>Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/ca98am79">ca98am79</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
