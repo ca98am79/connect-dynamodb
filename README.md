@@ -1,7 +1,7 @@
 
 # Connect DynamoDB
 
-connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.com/Wantworthy/dynode)
+connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://github.com/aws/aws-sdk-js)
 
 ## Installation
 
@@ -9,10 +9,9 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 
 ## Options
   
-  - `client` An existing dynode client object you normally get from `new (dynode.Client)({accessKeyId: "AWSAccessKey", secretAccessKey: "SecretAccessKey"});`
+  - `client` An existing AWS DynamoDB object you normally get from `new AWS.DynamoDB.Client()`
+  - `AWSConfigPath` Path to JSON document containing your [AWS credentials](http://docs.aws.amazon.com/nodejs/latest/dg/configuration-guide.html#nodejs-dg-credentials-from-disk)
   - `table` DynamoDB server session table name
-  - `accessKeyId` AWS accessKeyId
-  - `secretAccessKey` AWS secretAccessKey
   - `prefix` Key prefix defaulting to "sess"
   - `reapInterval` How often expired sessions should be cleaned up
 
@@ -25,11 +24,7 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 	  // Name of the table you would like to use for sessions.
 	  table: 'myapp-sessions',
 	
-	  // AWSAccessKey
-	  accessKeyId: 'AWSAccessKey',
-	  
-	  // AWS secretAccessKey
-	  secretAccessKey: 'SecretAccessKey',
+	  AWSConfigPath: './path/to/credentials.json',
 	  
 	  // Optional. How often expired sessions should be cleaned up.
   	  // Defaults to 600000 (10 minutes).
@@ -45,21 +40,13 @@ connect-dynamodb is a DynamoDB session store backed by [dynode](https://github.c
 	  // Name of the table you would like to use for sessions.
 	  table: 'myapp-sessions',
 	
-	  // AWSAccessKey
-	  accessKeyId: 'AWSAccessKey',
-	  
-	  // AWS secretAccessKey
-	  secretAccessKey: 'SecretAccessKey'
+	  AWSConfigPath: './path/to/credentials.json'
 	});
 	
     var app = express.createServer(
 		  express.cookieParser()
-		, express.session({ secret: 'YourSecretKey', store: store)
+		, express.session({ secret: 'YourSecretKey', store: store})
 	  );
-
-## TODO
-
-Improve tests
 
 ## Contributors
 
