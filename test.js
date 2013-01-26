@@ -4,31 +4,44 @@
  */
 
 var assert = require('assert')
-  , connect = require('connect')
-  , DynamoDBStore = require('./')(connect);
+, connect = require('connect')
+, DynamoDBStore = require('./')(connect);
 
-var store = new DynamoDBStore;
-var store_alt = new DynamoDBStore({accessKeyId: process.env.AWSAccessKey, secretAccessKey: process.env.SecretAccessKey});
+var store = new DynamoDBStore({table : 'sessions-test'});
 
-store.client.on('connect', function(){
-  // #set()
-  store.set('123', { cookie: { maxAge: 2000 }, name: 'tj' }, function(err, ok){
-    assert.ok(!err, '#set() got an error');
-    assert.ok(ok, '#set() is not ok');
-    
-    // #get()
-    store.get('123', function(err, data){
-      assert.ok(!err, '#get() got an error');
-      assert.deepEqual({ cookie: { maxAge: 2000 }, name: 'tj' }, data);
-  
-      // #set null
-      store.set('123', { cookie: { maxAge: 2000 }, name: 'tj' }, function(){
-        store.destroy('123', function(){
-         console.log('done');
-         store.client.end(); 
-         store_alt.client.end();
-        });
-      });
-    })
-  });
+// #set()
+store.set('123', {
+	cookie: {
+		maxAge: 2000
+	}, 
+	name: 'tj'
+}, function(err, ok){
+	assert.ok(!err, '#set() got an error');
+	assert.ok(ok, '#set() is not ok');
+
+	// #get()
+	store.get('123', function(err, data){
+		assert.ok(!err, '#get() got an error');
+		assert.deepEqual({
+			cookie: {
+				maxAge: 2000
+			}, 
+			name: 'tj'
+		}, data);
+
+		// #set null
+		store.set('123', {
+			cookie: {
+				maxAge: 2000
+			}, 
+			name: 'tj'
+		}, function(){
+			store.destroy('123', function(){
+				store.get('123', function(err, data){
+					assert.ok(err, '#get() should not find destroyed key');
+					console.log('done');
+				});
+			});
+		});
+	})
 });
