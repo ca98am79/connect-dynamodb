@@ -1,36 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Connect-dynamodb by ca98am79</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <title>Connect-dynamodb by ca98am79</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Connect-dynamodb</h1>
-        <p>DynamoDB session store for Connect</p>
+    <div id="container">
+      <div class="inner">
 
-        <p class="view"><a href="https://github.com/ca98am79/connect-dynamodb">View the Project on GitHub <small>ca98am79/connect-dynamodb</small></a></p>
+        <header>
+          <h1>Connect-dynamodb</h1>
+          <h2>DynamoDB session store for Connect</h2>
+        </header>
 
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ca98am79/connect-dynamodb/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ca98am79/connect-dynamodb/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ca98am79/connect-dynamodb" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
 
-        <ul>
-          <li><a href="https://github.com/ca98am79/connect-dynamodb/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/ca98am79/connect-dynamodb/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ca98am79/connect-dynamodb">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>Connect DynamoDB</h1>
+        <hr>
 
-<p>connect-dynamodb is a DynamoDB session store backed by <a href="https://github.com/Wantworthy/dynode">dynode</a></p>
+        <section id="main_content">
+          <h1>Connect DynamoDB</h1>
+
+<p>connect-dynamodb is a DynamoDB session store backed by the <a href="https://github.com/aws/aws-sdk-js">aws-sdk</a></p>
 
 <h2>Installation</h2>
 
@@ -41,14 +44,13 @@
 
 <ul>
 <li>
-<code>client</code> An existing dynode client object you normally get from <code>new (dynode.Client)({accessKeyId: "AWSAccessKey", secretAccessKey: "SecretAccessKey"});</code>
+<code>client</code> An existing AWS DynamoDB object you normally get from <code>new AWS.DynamoDB().client</code>
+</li>
+<li>
+<code>AWSConfigPath</code> Path to JSON document containing your <a href="http://docs.aws.amazon.com/nodejs/latest/dg/configuration-guide.html#nodejs-dg-credentials-from-disk">AWS credentials</a>
 </li>
 <li>
 <code>table</code> DynamoDB server session table name</li>
-<li>
-<code>accessKeyId</code> AWS accessKeyId</li>
-<li>
-<code>secretAccessKey</code> AWS secretAccessKey</li>
 <li>
 <code>prefix</code> Key prefix defaulting to "sess"</li>
 <li>
@@ -62,11 +64,7 @@ var store = new DynamoDBStore({
   // Name of the table you would like to use for sessions.
   table: 'myapp-sessions',
 
-  // AWSAccessKey
-  accessKeyId: 'AWSAccessKey',
-
-  // AWS secretAccessKey
-  secretAccessKey: 'SecretAccessKey',
+  AWSConfigPath: './path/to/credentials.json',
 
   // Optional. How often expired sessions should be cleaned up.
   // Defaults to 600000 (10 minutes).
@@ -83,16 +81,12 @@ server.use(connect.session({secret: 'YourSecretKey', store: store });
   // Name of the table you would like to use for sessions.
   table: 'myapp-sessions',
 
-  // AWSAccessKey
-  accessKeyId: 'AWSAccessKey',
-
-  // AWS secretAccessKey
-  secretAccessKey: 'SecretAccessKey'
+  AWSConfigPath: './path/to/credentials.json'
 });
 
 var app = express.createServer(
       express.cookieParser()
-    , express.session({ secret: 'YourSecretKey', store: store)
+    , express.session({ secret: 'YourSecretKey', store: store})
   );
 </code></pre>
 
@@ -128,13 +122,15 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/ca98am79">ca98am79</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+        </section>
+
+        <footer>
+          Connect-dynamodb is maintained by <a href="https://github.com/ca98am79">ca98am79</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
   </body>
 </html>
