@@ -37,16 +37,16 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
  	
  	DynamoDBStore = require('connect-dynamodb')(express);
  	var store = new DynamoDBStore({
-	  // Name of the table you would like to use for sessions.
-	  table: 'myapp-sessions',
+		// Name of the table you would like to use for sessions.
+	  	table: 'myapp-sessions',
 	
-	  AWSConfigPath: './path/to/credentials.json'
+		AWSConfigPath: './path/to/credentials.json'
 	});
 	
-    var app = express.createServer(
-		  express.cookieParser()
-		, express.session({ secret: 'YourSecretKey', store: store})
-	  );
+    	var app = express(
+		express.cookieParser(), 
+		express.session({ secret: 'YourSecretKey', store: store})
+	);
 
 ## Contributors
 
