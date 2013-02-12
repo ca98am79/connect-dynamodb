@@ -52,42 +52,39 @@
 <li>
 <code>table</code> DynamoDB server session table name</li>
 <li>
-<code>prefix</code> Key prefix defaulting to "sess"</li>
+<code>prefix</code> Key prefix, defaulting to "sess"</li>
 <li>
 <code>reapInterval</code> How often expired sessions should be cleaned up</li>
 </ul><h2>Usage</h2>
 
-<pre><code>var connect = require('connect')
-      , DynamoDBStore = require('connect-dynamodb')(connect);
+<pre><code>var options = {
+    // Name of the table you would like to use for sessions.
+    // Defaults to 'sessions'
+    table: 'myapp-sessions',
 
-var store = new DynamoDBStore({
-  // Name of the table you would like to use for sessions.
-  table: 'myapp-sessions',
+    // Path to AWS credentials
+    // Defaults to './aws-config.json'
+    AWSConfigPath: './path/to/credentials.json',
 
-  AWSConfigPath: './path/to/credentials.json',
+    // Optional. How often expired sessions should be cleaned up.
+    // Defaults to 600000 (10 minutes).
+    reapInterval: 600000
+};
 
-  // Optional. How often expired sessions should be cleaned up.
-  // Defaults to 600000 (10 minutes).
-  reapInterval: 600000
-});
-
-var server = connect.createServer();
-server.use(connect.session({secret: 'YourSecretKey', store: store });
+var connect = require('connect'),
+    DynamoDBStore = require('connect-dynamodb')(connect);
+connect()
+    .use(connect.cookieParser())
+    .use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
 </code></pre>
 
 <p>Or with <a href="http://expressjs.com/">express</a></p>
 
-<pre><code>var store = new DynamoDBStore({
-  // Name of the table you would like to use for sessions.
-  table: 'myapp-sessions',
-
-  AWSConfigPath: './path/to/credentials.json'
-});
-
-var app = express.createServer(
-      express.cookieParser()
-    , express.session({ secret: 'YourSecretKey', store: store})
-  );
+<pre><code>DynamoDBStore = require('connect-dynamodb')(express);
+var app = express(
+    express.cookieParser(), 
+    express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'})
+);
 </code></pre>
 
 <h2>Contributors</h2>
@@ -100,7 +97,7 @@ var app = express.createServer(
 
 <h2>LICENSE - "MIT License"</h2>
 
-<p>Copyright (c) 2012 Mike Carson, <a href="http://ca98am79.com/">http://ca98am79.com/</a></p>
+<p>Copyright (c) 2013 Mike Carson, <a href="http://ca98am79.com/">http://ca98am79.com/</a></p>
 
 <p>Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
