@@ -11,41 +11,37 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
   - `client` An existing AWS DynamoDB object you normally get from `new AWS.DynamoDB().client`
   - `AWSConfigPath` Path to JSON document containing your [AWS credentials](http://docs.aws.amazon.com/nodejs/latest/dg/configuration-guide.html#nodejs-dg-credentials-from-disk)
   - `table` DynamoDB server session table name
-  - `prefix` Key prefix defaulting to "sess"
+  - `prefix` Key prefix, defaulting to "sess"
   - `reapInterval` How often expired sessions should be cleaned up
 
 ## Usage
 
-    var connect = require('connect')
-	 	  , DynamoDBStore = require('connect-dynamodb')(connect);
-	 	  
-	var store = new DynamoDBStore({
-	  // Name of the table you would like to use for sessions.
-	  table: 'myapp-sessions',
+	var options = {
+		// Name of the table you would like to use for sessions.
+		// Defaults to 'sessions'
+	  	table: 'myapp-sessions',
 	
-	  AWSConfigPath: './path/to/credentials.json',
+		// Path to AWS credentials
+  	  	// Defaults to './aws-config.json'
+		AWSConfigPath: './path/to/credentials.json',
 	  
-	  // Optional. How often expired sessions should be cleaned up.
-  	  // Defaults to 600000 (10 minutes).
-  	  reapInterval: 600000
-	});
+	  	// Optional. How often expired sessions should be cleaned up.
+  	  	// Defaults to 600000 (10 minutes).
+  	  	reapInterval: 600000
+	};
 	
-    var server = connect.createServer();
-	server.use(connect.session({secret: 'YourSecretKey', store: store });
+	var connect = require('connect'),
+		DynamoDBStore = require('connect-dynamodb')(connect);
+	connect()
+		.use(connect.cookieParser())
+		.use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
 
  Or with [express](http://expressjs.com/)
  	
  	DynamoDBStore = require('connect-dynamodb')(express);
- 	var store = new DynamoDBStore({
-		// Name of the table you would like to use for sessions.
-	  	table: 'myapp-sessions',
-	
-		AWSConfigPath: './path/to/credentials.json'
-	});
-	
-    	var app = express(
+ 	var app = express(
 		express.cookieParser(), 
-		express.session({ secret: 'YourSecretKey', store: store})
+		express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'})
 	);
 
 ## Contributors
@@ -58,7 +54,7 @@ Thanks!
 
 ## LICENSE - "MIT License"
 
-Copyright (c) 2012 Mike Carson, http://ca98am79.com/
+Copyright (c) 2013 Mike Carson, http://ca98am79.com/
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
