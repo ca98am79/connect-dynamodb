@@ -1,3 +1,8 @@
+0.1.2 / 2013-04-06
+==================
+
+  * Fixed reap issue (https://github.com/ca98am79/connect-dynamodb/issues/3)
+
 0.1.1 / 2013-01-26
 ==================
 
