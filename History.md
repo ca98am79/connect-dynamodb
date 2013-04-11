@@ -1,3 +1,8 @@
+0.1.3 / 2013-04-11
+==================
+
+  * Fix expiry default if no sess.cookie.maxAge (https://github.com/ca98am79/connect-dynamodb/issues/4)
+
 0.1.2 / 2013-04-06
 ==================
 
