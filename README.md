@@ -49,6 +49,9 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 Some people that have added features and fixed bugs in `connect-dynamodb` other than me.
 
 * [Eric Abouaf](https://github.com/neyric)
+* [James Bloomer](https://github.com/jamesbloomer)
+* [Roy Lines](https://github.com/roylines)
+* [B2M Development](https://github.com/b2mdevelopment)
 
 Thanks!
 
