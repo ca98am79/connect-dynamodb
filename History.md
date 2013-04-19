@@ -1,3 +1,8 @@
+0.1.4 / 2013-04-19
+==================
+
+  * Specify API version because of breaking updates to aws-sdk-js (http://aws.amazon.com/releasenotes/JavaScript/3118686131819314)
+
 0.1.3 / 2013-04-11
 ==================
 
