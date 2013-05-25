@@ -49,7 +49,7 @@ store.set('123', {
 				// #reap()
 				setTimeout(function(){
 					store.get('1234', function(err, data){
-						assert.strictEqual(data, null, '#get() should not find destroyed key');
+						assert.strictEqual(data, null, '#get() should not find reaped key');
 						
 						console.log('done');
 					});
