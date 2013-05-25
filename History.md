@@ -1,3 +1,8 @@
+1.0.0 / 2013-05-25
+==================
+
+  * Adding support for the 2012-08-10 API version of DynamoDB (https://github.com/ca98am79/connect-dynamodb/issues/6)
+
 0.1.4 / 2013-04-19
 ==================
 
