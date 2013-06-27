@@ -1,3 +1,8 @@
+1.0.1 / 2013-06-27
+==================
+
+  * Change expires check to a number (https://github.com/ca98am79/connect-dynamodb/issues/11)
+
 1.0.0 / 2013-05-25
 ==================
 
