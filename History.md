@@ -1,3 +1,8 @@
+1.0.2 / 2013-07-27
+==================
+
+  * Properly handle errors in get (https://github.com/ca98am79/connect-dynamodb/issues/12)
+
 1.0.1 / 2013-06-27
 ==================
 
