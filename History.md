@@ -1,3 +1,8 @@
+1.0.4 / 2013-07-27
+==================
+
+  * Fix for default table name (https://github.com/ca98am79/connect-dynamodb/issues/13)
+
 1.0.3 / 2013-08-10
 ==================
 
