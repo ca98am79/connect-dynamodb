@@ -10,7 +10,7 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
   
   - `client` An existing AWS DynamoDB object you normally get from `new AWS.DynamoDB()`
   - `AWSConfigPath` Path to JSON document containing your [AWS credentials](http://docs.aws.amazon.com/nodejs/latest/dg/configuration-guide.html#nodejs-dg-credentials-from-disk)
-  - `table` DynamoDB server session table name
+  - `table` DynamoDB server session table name (currently the hash key has to be `id` - see [issue #14](https://github.com/ca98am79/connect-dynamodb/issues/14))
   - `prefix` Key prefix, defaulting to "sess"
   - `reapInterval` How often expired sessions should be cleaned up
 
