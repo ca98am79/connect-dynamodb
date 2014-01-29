@@ -1,3 +1,8 @@
+1.0.5 / 2014-01-28
+==================
+
+  * Change to allow loading of AWS credentials from environment vars (https://github.com/ca98am79/connect-dynamodb/issues/15)
+
 1.0.4 / 2013-07-27
 ==================
 

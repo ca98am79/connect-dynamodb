@@ -9,10 +9,11 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 ## Options
   
   - `client` An existing AWS DynamoDB object you normally get from `new AWS.DynamoDB()`
-  - `AWSConfigPath` Path to JSON document containing your [AWS credentials](http://docs.aws.amazon.com/nodejs/latest/dg/configuration-guide.html#nodejs-dg-credentials-from-disk)
-  - `table` DynamoDB server session table name
-  - `prefix` Key prefix, defaulting to "sess"
-  - `reapInterval` How often expired sessions should be cleaned up
+  - `AWSConfigPath` Optional path to JSON document containing your [AWS credentials](http://docs.aws.amazon.com/nodejs/latest/dg/configuration-guide.html#nodejs-dg-credentials-from-disk) (defaults to loading credentials from [environment variables](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Environment_Variables))
+  - `AWSRegion` Optional AWS region (defaults to 'us-east-1')
+  - `table` Optional DynamoDB server session table name (defaults to "sessions")
+  - `prefix` Optional key prefix (defaults to "sess")
+  - `reapInterval` Optional - how often expired sessions should be cleaned up (defaults to 600000)
 
 ## Usage
 
@@ -21,9 +22,8 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 		// Defaults to 'sessions'
 	  	table: 'myapp-sessions',
 	
-		// Path to AWS credentials
-  	  	// Defaults to './aws-config.json'
-		AWSConfigPath: './path/to/credentials.json',
+		// Optional path to AWS credentials (loads credentials from environment variables by default)
+  	  	// AWSConfigPath: './path/to/credentials.json',
 	  
 	  	// Optional. How often expired sessions should be cleaned up.
   	  	// Defaults to 600000 (10 minutes).
@@ -59,7 +59,7 @@ Thanks!
 
 ## LICENSE - "MIT License"
 
-Copyright (c) 2013 Mike Carson, http://ca98am79.com/
+Copyright (c) 2014 Mike Carson, http://ca98am79.com/
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
