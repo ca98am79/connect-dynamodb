@@ -1,3 +1,8 @@
+1.0.6 / 2014-01-29
+==================
+
+  * bug fix (https://github.com/ca98am79/connect-dynamodb/issues/16)
+
 1.0.5 / 2014-01-28
 ==================
 
