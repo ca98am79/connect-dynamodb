@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,53 +16,58 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Connect-dynamodb</h1>
-        <p>DynamoDB session store for Connect</p>
-
-        <p class="view"><a href="https://github.com/ca98am79/connect-dynamodb">View the Project on GitHub <small>ca98am79/connect-dynamodb</small></a></p>
-
+        <h1 class="header">Connect-dynamodb</h1>
+        <p class="header">DynamoDB session store for Connect</p>
 
         <ul>
-          <li><a href="https://github.com/ca98am79/connect-dynamodb/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/ca98am79/connect-dynamodb/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ca98am79/connect-dynamodb">View On <strong>GitHub</strong></a></li>
+          <li class="download"><a class="buttons" href="https://github.com/ca98am79/connect-dynamodb/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/ca98am79/connect-dynamodb/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/ca98am79/connect-dynamodb">View On GitHub</a></li>
         </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/ca98am79">ca98am79</a></p>
+
+
       </header>
       <section>
-        <h1>Connect DynamoDB</h1>
+        <h1>
+<a name="connect-dynamodb" class="anchor" href="#connect-dynamodb"><span class="octicon octicon-link"></span></a>Connect DynamoDB</h1>
 
 <p>connect-dynamodb is a DynamoDB session store backed by the <a href="https://github.com/aws/aws-sdk-js">aws-sdk</a></p>
 
-<h2>Installation</h2>
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <pre><code>  $ npm install connect-dynamodb
 </code></pre>
 
-<h2>Options</h2>
+<h2>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h2>
 
 <ul>
 <li>
 <code>client</code> An existing AWS DynamoDB object you normally get from <code>new AWS.DynamoDB()</code>
 </li>
 <li>
-<code>AWSConfigPath</code> Path to JSON document containing your <a href="http://docs.aws.amazon.com/nodejs/latest/dg/configuration-guide.html#nodejs-dg-credentials-from-disk">AWS credentials</a>
-</li>
+<code>AWSConfigPath</code> Optional path to JSON document containing your <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk">AWS credentials</a> (defaults to loading credentials from <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Environment_Variables">environment variables</a>)</li>
 <li>
-<code>table</code> DynamoDB server session table name</li>
+<code>AWSRegion</code> Optional AWS region (defaults to 'us-east-1')</li>
 <li>
-<code>prefix</code> Key prefix, defaulting to "sess"</li>
+<code>table</code> Optional DynamoDB server session table name (defaults to "sessions", currently the hash key has to be <code>id</code> - see <a href="https://github.com/ca98am79/connect-dynamodb/issues/14">issue #14</a>)</li>
 <li>
-<code>reapInterval</code> How often expired sessions should be cleaned up</li>
-</ul><h2>Usage</h2>
+<code>prefix</code> Optional key prefix (defaults to "sess")</li>
+<li>
+<code>reapInterval</code> Optional - how often expired sessions should be cleaned up (defaults to 600000)</li>
+</ul><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <pre><code>var options = {
     // Name of the table you would like to use for sessions.
     // Defaults to 'sessions'
     table: 'myapp-sessions',
 
-    // Path to AWS credentials
-    // Defaults to './aws-config.json'
-    AWSConfigPath: './path/to/credentials.json',
+    // Optional path to AWS credentials (loads credentials from environment variables by default)
+    // AWSConfigPath: './path/to/credentials.json',
 
     // Optional. How often expired sessions should be cleaned up.
     // Defaults to 600000 (10 minutes).
@@ -84,7 +90,8 @@ var app = express(
 );
 </code></pre>
 
-<h2>Contributors</h2>
+<h2>
+<a name="contributors" class="anchor" href="#contributors"><span class="octicon octicon-link"></span></a>Contributors</h2>
 
 <p>Some people that have added features and fixed bugs in <code>connect-dynamodb</code> other than me.</p>
 
@@ -94,11 +101,14 @@ var app = express(
 <li><a href="https://github.com/roylines">Roy Lines</a></li>
 <li><a href="https://github.com/b2mdevelopment">B2M Development</a></li>
 <li><a href="https://github.com/kristian-ackar">Kristian Ačkar</a></li>
+<li><a href="https://github.com/doapp-ryanp">doapp-ryanp</a></li>
+<li><a href="https://github.com/bryce-larson">Bryce Larson</a></li>
 </ul><p>Thanks!</p>
 
-<h2>LICENSE - "MIT License"</h2>
+<h2>
+<a name="license---mit-license" class="anchor" href="#license---mit-license"><span class="octicon octicon-link"></span></a>LICENSE - "MIT License"</h2>
 
-<p>Copyright (c) 2013 Mike Carson, <a href="http://ca98am79.com/">http://ca98am79.com/</a></p>
+<p>Copyright (c) 2014 Mike Carson, <a href="http://ca98am79.com/">http://ca98am79.com/</a></p>
 
 <p>Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -122,11 +132,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.</p>
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/ca98am79">ca98am79</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
   </body>
 </html>
