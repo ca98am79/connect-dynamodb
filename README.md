@@ -36,13 +36,20 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 		.use(connect.cookieParser())
 		.use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
 
- Or with [express](http://expressjs.com/)
+ Or with [express](http://expressjs.com/) 3.x.x
  	
  	DynamoDBStore = require('connect-dynamodb')(express);
  	var app = express(
 		express.cookieParser(), 
 		express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'})
 	);
+	
+Or with [express](http://expressjs.com/) 4.x.x
+ 	
+ 	var app = express();
+ 	var session = require('express-session');
+ 	DynamoDBStore = require('connect-dynamodb')({session: session});
+ 	app.use(session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}));
 
 ## Contributors
 
