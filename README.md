@@ -62,6 +62,7 @@ Some people that have added features and fixed bugs in `connect-dynamodb` other 
 * [Kristian Ačkar](https://github.com/kristian-ackar)
 * [doapp-ryanp](https://github.com/doapp-ryanp)
 * [Bryce Larson](https://github.com/bryce-larson)
+* [Etienne Adriaenssen](https://github.com/etiennea)
 
 Thanks!
 
