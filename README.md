@@ -2,6 +2,9 @@
 
 connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://github.com/aws/aws-sdk-js)
 
+[![NPM](https://nodei.co/npm/connect-dynamodb.png)](https://nodei.co/npm/connect-dynamodb/)
+[![NPM](https://nodei.co/npm-dl/connect-dynamodb.png)](https://nodei.co/npm-dl/connect-dynamodb/)
+
 ## Installation
 
 	  $ npm install connect-dynamodb
@@ -36,13 +39,20 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 		.use(connect.cookieParser())
 		.use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
 
- Or with [express](http://expressjs.com/)
+ Or with [express](http://expressjs.com/) 3.x.x
  	
  	DynamoDBStore = require('connect-dynamodb')(express);
  	var app = express(
 		express.cookieParser(), 
 		express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'})
 	);
+	
+Or with [express](http://expressjs.com/) 4.x.x
+ 	
+ 	var app = express();
+ 	var session = require('express-session');
+ 	DynamoDBStore = require('connect-dynamodb')({session: session});
+ 	app.use(session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}));
 
 ## Contributors
 
@@ -55,6 +65,7 @@ Some people that have added features and fixed bugs in `connect-dynamodb` other 
 * [Kristian Ačkar](https://github.com/kristian-ackar)
 * [doapp-ryanp](https://github.com/doapp-ryanp)
 * [Bryce Larson](https://github.com/bryce-larson)
+* [Etienne Adriaenssen](https://github.com/etiennea)
 
 Thanks!
 
@@ -64,4 +75,4 @@ connect-dynamodb is licensed under the [MIT license.](https://github.com/ca98am7
 
 ## Donations
 
-I made this in my spare time, so if you find it useful you can donate at my BTC address: `1K9EtkuWURtBMqeAUxRiQGmf8RQ7DmJ2TR`. Thank you very much!
+I made this in my spare time, so if you find it useful you can donate at my BTC address: `13Bzg4reJJt43wU1QsPSCzyFZMLhJbRELA`. Thank you very much!
