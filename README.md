@@ -52,7 +52,7 @@ Or with [express](http://expressjs.com/) 4.x.x
  	var app = express();
  	var session = require('express-session');
  	DynamoDBStore = require('connect-dynamodb')({session: session});
- 	app.use(session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}));
+ 	app.use(session({ store: new DynamoDBStore(options), secret: 'keyboard cat', resave: true, saveUninitialized: true}));
 
 ## Contributors
 
