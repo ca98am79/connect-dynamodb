@@ -31,6 +31,9 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 	  	// Optional. How often expired sessions should be cleaned up.
   	  	// Defaults to 600000 (10 minutes).
   	  	reapInterval: 600000
+
+	  	// Optional. For use with an alternate DynamoDB endpoint, like DynamoDB Local.
+  	  	endpoint: 'http://localhost:8000'
 	};
 	
 	var connect = require('connect'),
