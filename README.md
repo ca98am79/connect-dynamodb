@@ -32,10 +32,10 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
   	  	// AWSConfigPath: './path/to/credentials.json',
 
 		// Optional JSON object of AWS configuration options
-		    // AWSConfigJSON: {
-		    //     region: 'us-east-1',
-		    //     correctClockSkew: true
-		    // }
+  	  	// AWSConfigJSON: {
+  	  	//     region: 'us-east-1',
+  	  	//     correctClockSkew: true
+  	  	// }
 
 	  	// Optional. How often expired sessions should be cleaned up.
   	  	// Defaults to 600000 (10 minutes).
