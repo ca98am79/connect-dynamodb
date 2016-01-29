@@ -1,3 +1,8 @@
+1.0.7 / 2016-01-29
+==================
+
+  * Add ability to provide a JSON object to configure AWS, specify custom hashKey (https://github.com/ca98am79/connect-dynamodb/pull/26)
+
 1.0.6 / 2014-01-29
 ==================
 

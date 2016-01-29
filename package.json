@@ -1,7 +1,7 @@
 {
   "name": "connect-dynamodb",
   "description": "DynamoDB session store for Connect",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "Mike Carson <ca98am79@gmail.com> (http://ca98am79.com)",
   "main": "./index.js",
   "dependencies": {
