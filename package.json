@@ -5,8 +5,8 @@
   "author": "Mike Carson <ca98am79@gmail.com> (http://ca98am79.com)",
   "main": "./index.js",
   "dependencies": {
-    "aws-sdk": "*",
-    "connect": "*"
+    "aws-sdk": "^2.3.5",
+    "express-session": "^1.13.0"
   },
   "devDependencies": {
     "should": "*",
