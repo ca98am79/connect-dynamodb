@@ -1,3 +1,8 @@
+1.0.8 / 2016-07-18
+==================
+
+  * Fix issue with reap method (https://github.com/ca98am79/connect-dynamodb/issues/27)
+
 1.0.7 / 2016-01-29
 ==================
 
