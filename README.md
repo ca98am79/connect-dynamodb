@@ -56,18 +56,18 @@ With [connect](https://github.com/senchalabs/connect)
 
 With [express 3](http://expressjs.com/en/3x/api.html)
 
-   var DynamoDBStore = require('connect-dynamodb')(express);
-   var app = express(
+  var DynamoDBStore = require('connect-dynamodb')(express);
+  var app = express(
     express.cookieParser(),
     express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'})
   );
 
 With [express 4](http://expressjs.com/)
 
-   var app = express();
-   var session = require('express-session');
-   var DynamoDBStore = require('connect-dynamodb')({session: session});
-   app.use(session({store: new DynamoDBStore(options), secret: 'keyboard cat'}));
+  var app = express();
+  var session = require('express-session');
+  var DynamoDBStore = require('connect-dynamodb')({session: session});
+  app.use(session({store: new DynamoDBStore(options), secret: 'keyboard cat'}));
 
 ## Contributors
 
