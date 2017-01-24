@@ -12,62 +12,62 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 ## Options
 
   - One of the following:
-    - `client` An existing AWS DynamoDB object you normally get from `new AWS.DynamoDB()`, required for DynamoDB Local
-    - `AWSConfigPath` Path to JSON document containing your [AWS credentials](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk) (defaults to loading credentials from [environment variables](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Environment_Variables) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html)) and any additional [AWS configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html) options
-    - `AWSConfigJSON` JSON object containing your [AWS configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html) options
+    - `client` Optional AWS DynamoDB object from `new AWS.DynamoDB()` (*required for use with DynamoDB Local*)
+    - `AWSConfigPath` Optional path to JSON document containing your [AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk) 
+    - `AWSConfigJSON` Optional JSON object containing your [AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html)
   - `AWSRegion` Optional AWS region (defaults to 'us-east-1', ignored if using `AWSConfigPath` or `AWSConfigJSON`)
   - `table` Optional DynamoDB server session table name (defaults to "sessions")
   - `hashKey` Optional hash key (defaults to "id")
   - `prefix` Optional key prefix (defaults to "sess")
-  - `reapInterval` Optional - how often expired sessions should be cleaned up (defaults to 600000)
+  - `reapInterval` Optional session expiration in milliseconds (defaults to 10 minutes)
 
 ## Usage
 
-  var options = {
+Credentials and configuration are by default loaded from [environment variables](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Environment_Variables) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html)) but may optionally be passed in the options object.
+
+    var options = {
     // Name of the table you would like to use for sessions, defaults to 'sessions'
     table: 'myapp-sessions',
 
-    //
-    // Optional path to AWS credentials,
-    // loads from environment variables or shared credentials by default
+    // Optional path to AWS credentials and configuration file
     // AWSConfigPath: './path/to/credentials.json',
 
-    // Optional JSON object of AWS configuration options,
-    // loads from environment variables or shared credentials by default
+    // Optional JSON object of AWS credentials and configuration
     AWSConfigJSON: {
-      region: 'us-east-1',
-      correctClockSkew: true
+        accessKeyId: <YOUR_ACCESS_KEY_ID>,
+        secretAccessKey: <YOUR_SECRET_ACCESS_KEY>,
+        region: 'us-east-1'
     },
 
     // Optional client for alternate endpoint, such as DynamoDB Local
-    // client: new AWS.DynamoDB({ endpoint: new AWS.Endpoint('http://localhost:8000')}),
+    client: new AWS.DynamoDB({ endpoint: new AWS.Endpoint('http://localhost:8000')}),
 
     // Optional clean up interval, defaults to 600000 (10 minutes)
-    reapInterval: 86400000  // 1 day
-  };
+    reapInterval: 86400000    // 1 day
+    };
 
 With [connect](https://github.com/senchalabs/connect)
 
-  var connect = require('connect');
-  var DynamoDBStore = require('connect-dynamodb')(connect);
-  connect()
+    var connect = require('connect');
+    var DynamoDBStore = require('connect-dynamodb')(connect);
+    connect()
     .use(connect.cookieParser())
     .use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
 
 With [express 3](http://expressjs.com/en/3x/api.html)
 
-  var DynamoDBStore = require('connect-dynamodb')(express);
-  var app = express(
+    var DynamoDBStore = require('connect-dynamodb')(express);
+    var app = express(
     express.cookieParser(),
     express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'})
-  );
+    );
 
 With [express 4](http://expressjs.com/)
 
-  var app = express();
-  var session = require('express-session');
-  var DynamoDBStore = require('connect-dynamodb')({session: session});
-  app.use(session({store: new DynamoDBStore(options), secret: 'keyboard cat'}));
+    var app = express();
+    var session = require('express-session');
+    var DynamoDBStore = require('connect-dynamodb')({session: session});
+    app.use(session({store: new DynamoDBStore(options), secret: 'keyboard cat'}));
 
 ## Contributors
 
