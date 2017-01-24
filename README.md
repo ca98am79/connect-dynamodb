@@ -23,7 +23,7 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 
 ## Usage
 
-Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html)) but may optionally be overridden in the options object.
+Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html) but may optionally be overridden in the options object.
 
     var options = {
         // Name of the table you would like to use for sessions, defaults to 'sessions'
