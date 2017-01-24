@@ -13,7 +13,7 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 
   - One of the following:
     - `client` Optional AWS DynamoDB object from `new AWS.DynamoDB()` (*required for use with DynamoDB Local*)
-    - `AWSConfigPath` Optional path to JSON document containing your [AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk) 
+    - `AWSConfigPath` Optional path to a file containing your [AWS credentials and configuration from disk](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk) 
     - `AWSConfigJSON` Optional JSON object containing your [AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html)
   - `AWSRegion` Optional AWS region (defaults to 'us-east-1', ignored if using `AWSConfigPath` or `AWSConfigJSON`)
   - `table` Optional DynamoDB server session table name (defaults to "sessions")
@@ -23,27 +23,27 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 
 ## Usage
 
-Credentials and configuration are by default loaded from [environment variables](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Environment_Variables) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html)) but may optionally be passed in the options object.
+Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html)) but may optionally be overridden in the options object.
 
     var options = {
-    // Name of the table you would like to use for sessions, defaults to 'sessions'
-    table: 'myapp-sessions',
+        // Name of the table you would like to use for sessions, defaults to 'sessions'
+        table: 'myapp-sessions',
 
-    // Optional path to AWS credentials and configuration file
-    // AWSConfigPath: './path/to/credentials.json',
+        // Optional path to AWS credentials and configuration file
+        // AWSConfigPath: './path/to/credentials.json',
 
-    // Optional JSON object of AWS credentials and configuration
-    AWSConfigJSON: {
-        accessKeyId: <YOUR_ACCESS_KEY_ID>,
-        secretAccessKey: <YOUR_SECRET_ACCESS_KEY>,
-        region: 'us-east-1'
-    },
+        // Optional JSON object of AWS credentials and configuration
+            AWSConfigJSON: {
+            accessKeyId: <YOUR_ACCESS_KEY_ID>,
+            secretAccessKey: <YOUR_SECRET_ACCESS_KEY>,
+            region: 'us-east-1'
+        },
 
-    // Optional client for alternate endpoint, such as DynamoDB Local
-    client: new AWS.DynamoDB({ endpoint: new AWS.Endpoint('http://localhost:8000')}),
+        // Optional client for alternate endpoint, such as DynamoDB Local
+        client: new AWS.DynamoDB({ endpoint: new AWS.Endpoint('http://localhost:8000')}),
 
-    // Optional clean up interval, defaults to 600000 (10 minutes)
-    reapInterval: 86400000    // 1 day
+        // Optional clean up interval, defaults to 600000 (10 minutes)
+        reapInterval: 86400000    // 1 day
     };
 
 With [connect](https://github.com/senchalabs/connect)
@@ -51,15 +51,15 @@ With [connect](https://github.com/senchalabs/connect)
     var connect = require('connect');
     var DynamoDBStore = require('connect-dynamodb')(connect);
     connect()
-    .use(connect.cookieParser())
-    .use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
+        .use(connect.cookieParser())
+        .use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
 
 With [express 3](http://expressjs.com/en/3x/api.html)
 
     var DynamoDBStore = require('connect-dynamodb')(express);
     var app = express(
-    express.cookieParser(),
-    express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'})
+        express.cookieParser(),
+        express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'});
     );
 
 With [express 4](http://expressjs.com/)
