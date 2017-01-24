@@ -12,9 +12,9 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 ## Options
 
   - One of the following:
-    - `client` Optional AWS DynamoDB object from `new AWS.DynamoDB()` (*required for use with DynamoDB Local*)
-    - `AWSConfigPath` Optional path to a file containing your [AWS credentials and configuration from disk](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk) 
-    - `AWSConfigJSON` Optional JSON object containing your [AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html)
+    - `client` Optional AWS DynamoDB object from `new AWS.DynamoDB()`
+    - `AWSConfigPath` Optional path to a [file containing your AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk) 
+    - `AWSConfigJSON` Optional [JSON object containing your AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html)
   - `AWSRegion` Optional AWS region (defaults to 'us-east-1', ignored if using `AWSConfigPath` or `AWSConfigJSON`)
   - `table` Optional DynamoDB server session table name (defaults to "sessions")
   - `hashKey` Optional hash key (defaults to "id")
@@ -23,7 +23,7 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 
 ## Usage
 
-Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html) but may optionally be overridden in the options object. The client attribute is necessary for use with DynamoDB Local but can be left out if using DynamoDB with your AWS account.
+Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html) but may optionally be overridden in the options object. The client attribute is necessary for use with [DynamoDB Local](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html) but can be left out if using DynamoDB with your AWS account.
 
     var options = {
         // Optional DynamoDB table name, defaults to 'sessions'
