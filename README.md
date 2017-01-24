@@ -7,7 +7,7 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 
 ## Installation
 
-	  $ npm install connect-dynamodb
+    $ npm install connect-dynamodb
 
 ## Options
 
@@ -23,48 +23,51 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 
 ## Usage
 
-	var options = {
-		// Name of the table you would like to use for sessions, defaults to 'sessions'
-  	table: 'myapp-sessions',
+  var options = {
+    // Name of the table you would like to use for sessions, defaults to 'sessions'
+    table: 'myapp-sessions',
 
-		// Optional path to AWS credentials, loads from environment variables or shared credentials by default
-  	// AWSConfigPath: './path/to/credentials.json',
+    //
+    // Optional path to AWS credentials,
+    // loads from environment variables or shared credentials by default
+    // AWSConfigPath: './path/to/credentials.json',
 
-		// Optional JSON object of AWS configuration options, loads from environment variables or shared credentials by default
-  	AWSConfigJSON: {
-  	    region: 'us-east-1',
-  	    correctClockSkew: true
-  	},
+    // Optional JSON object of AWS configuration options,
+    // loads from environment variables or shared credentials by default
+    AWSConfigJSON: {
+      region: 'us-east-1',
+      correctClockSkew: true
+    },
 
-    // Optional client for DynamoDB Local, defaults to AWS
+    // Optional client for alternate endpoint, such as DynamoDB Local
     // client: new AWS.DynamoDB({ endpoint: new AWS.Endpoint('http://localhost:8000')}),
 
-  	// Optional clean up interval, defaults to 600000 (10 minutes)
-  	reapInterval: 86400000  // 1 day
-	};
+    // Optional clean up interval, defaults to 600000 (10 minutes)
+    reapInterval: 86400000  // 1 day
+  };
 
 With [connect](https://github.com/senchalabs/connect)
 
-	var connect = require('connect');
-	var DynamoDBStore = require('connect-dynamodb')(connect);
-	connect()
-		.use(connect.cookieParser())
-		.use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
+  var connect = require('connect');
+  var DynamoDBStore = require('connect-dynamodb')(connect);
+  connect()
+    .use(connect.cookieParser())
+    .use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
 
 With [express 3](http://expressjs.com/en/3x/api.html)
 
- 	var DynamoDBStore = require('connect-dynamodb')(express);
- 	var app = express(
-		express.cookieParser(),
-		express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'})
-	);
+   var DynamoDBStore = require('connect-dynamodb')(express);
+   var app = express(
+    express.cookieParser(),
+    express.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'})
+  );
 
 With [express 4](http://expressjs.com/)
 
- 	var app = express();
- 	var session = require('express-session');
- 	var DynamoDBStore = require('connect-dynamodb')({session: session});
- 	app.use(session({ store: new DynamoDBStore(options), secret: 'keyboard cat', resave: true, saveUninitialized: true}));
+   var app = express();
+   var session = require('express-session');
+   var DynamoDBStore = require('connect-dynamodb')({session: session});
+   app.use(session({store: new DynamoDBStore(options), secret: 'keyboard cat'}));
 
 ## Contributors
 
