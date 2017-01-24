@@ -11,10 +11,10 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 
 ## Options
 
-  - One of the following:
-    - `client` Optional AWS DynamoDB object from `new AWS.DynamoDB()`
+  - One of the following if not using environment variables or shared credentials:
     - `AWSConfigPath` Optional path to a [file containing your AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk) 
     - `AWSConfigJSON` Optional [JSON object containing your AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html)
+  - `client` Optional AWS DynamoDB object from `new AWS.DynamoDB()`
   - `AWSRegion` Optional AWS region (defaults to 'us-east-1', ignored if using `AWSConfigPath` or `AWSConfigJSON`)
   - `table` Optional DynamoDB server session table name (defaults to "sessions")
   - `hashKey` Optional hash key (defaults to "id")
