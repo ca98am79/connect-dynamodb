@@ -33,7 +33,7 @@ Credentials and configuration are automatically loaded from [environment variabl
         // AWSConfigPath: './path/to/credentials.json',
 
         // Optional JSON object of AWS credentials and configuration
-            AWSConfigJSON: {
+        AWSConfigJSON: {
             accessKeyId: <YOUR_ACCESS_KEY_ID>,
             secretAccessKey: <YOUR_SECRET_ACCESS_KEY>,
             region: 'us-east-1'
@@ -52,7 +52,7 @@ With [connect](https://github.com/senchalabs/connect)
     var DynamoDBStore = require('connect-dynamodb')(connect);
     connect()
         .use(connect.cookieParser())
-        .use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}))
+        .use(connect.session({ store: new DynamoDBStore(options), secret: 'keyboard cat'}));
 
 With [express 3](http://expressjs.com/en/3x/api.html)
 
