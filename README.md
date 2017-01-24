@@ -23,10 +23,10 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 
 ## Usage
 
-Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html) but may optionally be overridden in the options object.
+Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html) but may optionally be overridden in the options object. The client attribute is necessary for use with DynamoDB Local but can be left out if using DynamoDB with your AWS account.
 
     var options = {
-        // Name of the table you would like to use for sessions, defaults to 'sessions'
+        // Optional DynamoDB table name, defaults to 'sessions'
         table: 'myapp-sessions',
 
         // Optional path to AWS credentials and configuration file
