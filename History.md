@@ -1,3 +1,8 @@
+1.0.10 / 2017-02-27
+==================
+
+  * Set Consistent read by default (https://github.com/ca98am79/connect-dynamodb/pull/37)
+
 1.0.9 / 2016-08-21
 ==================
 
