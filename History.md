@@ -1,3 +1,8 @@
+1.0.11 / 2017-03-14
+==================
+
+  * Configurable ProvisionedThroughput read/write capacity units (https://github.com/ca98am79/connect-dynamodb/pull/40)
+
 1.0.10 / 2017-02-27
 ==================
 
