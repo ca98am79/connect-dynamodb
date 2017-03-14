@@ -43,7 +43,11 @@ Rational defaults are set but can be overridden in the options object. Credentia
         client: new AWS.DynamoDB({ endpoint: new AWS.Endpoint('http://localhost:8000')}),
 
         // Optional clean up interval, defaults to 600000 (10 minutes)
-        reapInterval: 86400000    // 1 day
+        reapInterval: 86400000,    // 1 day
+
+        // Optional ProvisionedThroughput params, defauts to 5
+        readCapacityUnits: 25,
+        writeCapacityUnits: 25
     };
 
 With [connect](https://github.com/senchalabs/connect)
