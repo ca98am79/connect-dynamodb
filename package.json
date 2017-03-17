@@ -4,13 +4,17 @@
   "version": "1.0.11",
   "author": "Mike Carson <ca98am79@gmail.com> (http://ca98am79.com)",
   "main": "./index.js",
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "aws-sdk": "*",
     "connect": "*"
   },
   "devDependencies": {
-    "should": "*",
-    "mocha": "*"
+    "express-session": "*",
+    "mocha": "*",
+    "should": "*"
   },
   "engines": {
     "node": "*"

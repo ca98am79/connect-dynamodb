@@ -14,7 +14,7 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 Rational defaults are set but can be overridden in the options object. Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html) but may optionally be passed through a JSON file or object. The client attribute is necessary for use with [DynamoDB Local](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html) but can be left out if using DynamoDB with your AWS account.
 
   - One of the following if not using environment variables or shared credentials:
-    - `AWSConfigPath` Optional path to a [file containing your AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk) 
+    - `AWSConfigPath` Optional path to a [file containing your AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk)
     - `AWSConfigJSON` Optional [JSON object containing your AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html)
   - `client` Optional AWS DynamoDB object from `new AWS.DynamoDB()`
   - `AWSRegion` Optional AWS region (defaults to 'us-east-1', ignored if using `AWSConfigPath` or `AWSConfigJSON`)
@@ -88,6 +88,28 @@ Some people that have added features and fixed bugs in `connect-dynamodb` other 
 * [Michael Irigoyen](https://github.com/goyney)
 
 Thanks!
+
+## Testing
+
+If you want to run the tests locally and have the AWS environment variables setup you can run the command:
+
+```
+npm test
+```
+
+You can also run it locally by running the following two scripts in separate terminals:
+
+```
+docker run -it --rm \
+  --name=dynamodb-test \
+  -p 127.0.0.1:8000:8000 \
+  deangiberson/aws-dynamodb-local
+```
+
+```
+export AWS_CONFIG_JSON='{"endpoint": "http://127.0.0.1:8000", "region": "us-east-1", "accessKeyId": "accesskey", "secretAccessKey": "secretaccesskey"}'
+npm test
+```
 
 ## License
 

@@ -1,11 +1,19 @@
 var should = require('should'),
-    connect = require('connect'),
-    DynamoDBStore = require(__dirname + '/../lib/connect-dynamodb.js')(connect);
+    session = require('express-session'),
+    DynamoDBStore = require(__dirname + '/../lib/connect-dynamodb.js')({session: session});
+
+var client;
+if (process.env.AWS_CONFIG_JSON) {
+    var AWS = require('aws-sdk');
+    var config = JSON.parse(process.env.AWS_CONFIG_JSON);
+    client = new AWS.DynamoDB(config);
+}
 
 describe('DynamoDBStore', function () {
     describe('Instantiation', function () {
         it('should be able to be created', function () {
             var store = new DynamoDBStore({
+                client: client,
                 table: 'sessions-test'
             });
             store.should.be.an.instanceOf(DynamoDBStore)
@@ -14,8 +22,10 @@ describe('DynamoDBStore', function () {
     describe('Setting', function () {
         it('should store data correctly', function (done) {
             var store = new DynamoDBStore({
+                client: client,
                 table: 'sessions-test'
             });
+
             store.set('123', {
                 cookie: {
                     maxAge: 2000
@@ -32,6 +42,7 @@ describe('DynamoDBStore', function () {
     describe('Getting', function () {
         before(function () {
             var store = new DynamoDBStore({
+                client: client,
                 table: 'sessions-test'
             });
             store.set('1234', {
@@ -44,6 +55,7 @@ describe('DynamoDBStore', function () {
 
         it('should get data correctly', function (done) {
             var store = new DynamoDBStore({
+                client: client,
                 table: 'sessions-test'
             });
             store.get('1234', function (err, res) {
@@ -61,6 +73,7 @@ describe('DynamoDBStore', function () {
     describe('Destroying', function () {
         before(function () {
             var store = new DynamoDBStore({
+                client: client,
                 table: 'sessions-test'
             });
             store.set('12345', {
@@ -73,6 +86,7 @@ describe('DynamoDBStore', function () {
 
         it('should destroy data correctly', function (done) {
             var store = new DynamoDBStore({
+                client: client,
                 table: 'sessions-test'
             });
             store.destroy('12345', function (err, res) {
@@ -91,6 +105,7 @@ describe('DynamoDBStore', function () {
     describe('Reaping', function () {
         before(function (done) {
             var store = new DynamoDBStore({
+                client: client,
                 table: 'sessions-test'
             });
             store.set('123456', {
@@ -103,6 +118,7 @@ describe('DynamoDBStore', function () {
 
         it('should reap data correctly', function (done) {
             var store = new DynamoDBStore({
+                client: client,
                 table: 'sessions-test'
             });
             store.reap(function (err, res) {
