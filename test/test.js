@@ -84,20 +84,25 @@ describe('DynamoDBStore', function () {
                 table: 'sessions-test'
             });
 
-            maxAge = ((+new Date()) + 2000);
+            maxAge = (Math.floor((Date.now() + 2000) / 1000) );
             store.set('1234', sess, function () {});
         });
 
         it('should touch data correctly', function (done) {
+            this.timeout(4000);
             var store = new DynamoDBStore({
                 client: client,
                 table: 'sessions-test'
             });
-            store.touch('1234', sess, function (err, res) {
-                if (err) throw err;
-                res.Attributes.expires.N.should.be.above(maxAge);
-                done();
-            });
+            setTimeout(function() {
+              store.touch('1234', sess, function (err, res) {
+                  if (err) throw err;
+                  var expires = res.Attributes.expires.N;
+                  expires.should.be.above(maxAge);
+                  (expires - maxAge).should.be.above(1.5);
+                  done();
+              });
+            }, 1510);
         });
 
     });
