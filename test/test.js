@@ -70,6 +70,37 @@ describe('DynamoDBStore', function () {
         });
 
     });
+    describe('Touching', function () {
+        var sess = {
+            cookie: {
+                maxAge: 2000
+            },
+            name: 'tj'
+        };
+        var maxAge = null;
+        before(function () {
+            var store = new DynamoDBStore({
+                client: client,
+                table: 'sessions-test'
+            });
+
+            maxAge = ((+new Date()) + 2000);
+            store.set('1234', sess, function () {});
+        });
+
+        it('should touch data correctly', function (done) {
+            var store = new DynamoDBStore({
+                client: client,
+                table: 'sessions-test'
+            });
+            store.touch('1234', sess, function (err, res) {
+                if (err) throw err;
+                res.Attributes.expires.N.should.be.above(maxAge);
+                done();
+            });
+        });
+
+    });
     describe('Destroying', function () {
         before(function () {
             var store = new DynamoDBStore({
@@ -117,6 +148,7 @@ describe('DynamoDBStore', function () {
         });
 
         it('should reap data correctly', function (done) {
+            this.timeout(5000); // increased timeout for local dynamo
             var store = new DynamoDBStore({
                 client: client,
                 table: 'sessions-test'
