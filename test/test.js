@@ -40,7 +40,7 @@ describe('DynamoDBStore', function () {
 
     });
     describe('Getting', function () {
-        before(function () {
+        before(function (done) {
             var store = new DynamoDBStore({
                 client: client,
                 table: 'sessions-test'
@@ -50,7 +50,7 @@ describe('DynamoDBStore', function () {
                     maxAge: 2000
                 },
                 name: 'tj'
-            }, function () {});
+            }, done);
         });
 
         it('should get data correctly', function (done) {
@@ -78,14 +78,14 @@ describe('DynamoDBStore', function () {
             name: 'tj'
         };
         var maxAge = null;
-        before(function () {
+        before(function (done) {
             var store = new DynamoDBStore({
                 client: client,
                 table: 'sessions-test'
             });
 
             maxAge = (Math.floor((Date.now() + 2000) / 1000) );
-            store.set('1234', sess, function () {});
+            store.set('1234', sess, done);
         });
 
         it('should touch data correctly', function (done) {
@@ -99,7 +99,7 @@ describe('DynamoDBStore', function () {
                   if (err) throw err;
                   var expires = res.Attributes.expires.N;
                   expires.should.be.above(maxAge);
-                  (expires - maxAge).should.be.above(1.5);
+                  (expires - maxAge).should.be.aboveOrEqual(1);
                   done();
               });
             }, 1510);
@@ -107,7 +107,7 @@ describe('DynamoDBStore', function () {
 
     });
     describe('Destroying', function () {
-        before(function () {
+        before(function (done) {
             var store = new DynamoDBStore({
                 client: client,
                 table: 'sessions-test'
@@ -117,7 +117,7 @@ describe('DynamoDBStore', function () {
                     maxAge: 2000
                 },
                 name: 'tj'
-            }, function () {});
+            }, done);
         });
 
         it('should destroy data correctly', function (done) {
