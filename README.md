@@ -11,7 +11,7 @@ connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://git
 
 ## Options
 
-Rational defaults are set but can be overridden in the options object. Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html) but may optionally be passed through a JSON file or object. The client attribute is necessary for use with [DynamoDB Local](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html) but can be left out if using DynamoDB with your AWS account.
+Rational defaults are set but can be overridden in the options object. Credentials and configuration are automatically loaded from [environment variables](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-environment.html) or [shared credentials](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html) but may optionally be passed through a JSON file or object. The client attribute is necessary for use with [DynamoDB Local](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html) but can be left out if using DynamoDB with your AWS account.  To use [DynamoDB TTL](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html), enable it on the table and select the `expires` field.
 
   - One of the following if not using environment variables or shared credentials:
     - `AWSConfigPath` Optional path to a [file containing your AWS credentials and configuration](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Credentials_from_Disk)
@@ -21,7 +21,7 @@ Rational defaults are set but can be overridden in the options object. Credentia
   - `table` Optional DynamoDB server session table name (defaults to "sessions")
   - `hashKey` Optional hash key (defaults to "id")
   - `prefix` Optional key prefix (defaults to "sess")
-  - `reapInterval` Optional session expiration in milliseconds (defaults to 10 minutes)
+  - `reapInterval` Legacy session expiration cleanup in milliseconds.  Should instead enable [DynamoDB TTL](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) and select the `expires` field.
 
 ## Usage
 
@@ -41,9 +41,6 @@ Rational defaults are set but can be overridden in the options object. Credentia
 
         // Optional client for alternate endpoint, such as DynamoDB Local
         client: new AWS.DynamoDB({ endpoint: new AWS.Endpoint('http://localhost:8000')}),
-
-        // Optional clean up interval, defaults to 600000 (10 minutes)
-        reapInterval: 86400000,    // 1 day
 
         // Optional ProvisionedThroughput params, defaults to 5
         readCapacityUnits: 25,
@@ -73,22 +70,6 @@ With [express 4](http://expressjs.com/)
     var DynamoDBStore = require('connect-dynamodb')({session: session});
     app.use(session({store: new DynamoDBStore(options), secret: 'keyboard cat'}));
 
-## Contributors
-
-Some people that have added features and fixed bugs in `connect-dynamodb` other than me.
-
-* [Eric Abouaf](https://github.com/neyric)
-* [James Bloomer](https://github.com/jamesbloomer)
-* [Roy Lines](https://github.com/roylines)
-* [B2M Development](https://github.com/b2mdevelopment)
-* [Kristian Ačkar](https://github.com/kristian-ackar)
-* [doapp-ryanp](https://github.com/doapp-ryanp)
-* [Bryce Larson](https://github.com/bryce-larson)
-* [Etienne Adriaenssen](https://github.com/etiennea)
-* [Michael Irigoyen](https://github.com/goyney)
-
-Thanks!
-
 ## Testing
 
 If you want to run the tests locally and have the AWS environment variables setup you can run the command:
@@ -117,4 +98,4 @@ connect-dynamodb is licensed under the [MIT license.](https://github.com/ca98am7
 
 ## Donations
 
-I made this in my spare time, so if you find it useful you can donate at my BTC address: `1Mhdjrx4ioComkn2kZX4cJVV2rXV1VPNGM`. Thank you very much!
+I made this in my spare time, so if you find it useful you can donate at my BTC address: `15rmktUUfB8hHh5u57qzsihVPBdZmMePZB`. Thank you very much!

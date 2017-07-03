@@ -1,3 +1,8 @@
+1.0.12 / 2017-07-03
+==================
+
+  * Implemented touch as requested on #23 and changed the expires field to work on seconds units instead of millis to address #39. This way to use TTL we just need to enable it on the table and select the 'expires' field. (https://github.com/ca98am79/connect-dynamodb/pull/43)
+
 1.0.11 / 2017-03-14
 ==================
 
