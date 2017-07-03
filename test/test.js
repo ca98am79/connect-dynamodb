@@ -40,7 +40,7 @@ describe('DynamoDBStore', function () {
 
     });
     describe('Getting', function () {
-        before(function () {
+        before(function (done) {
             var store = new DynamoDBStore({
                 client: client,
                 table: 'sessions-test'
@@ -50,7 +50,7 @@ describe('DynamoDBStore', function () {
                     maxAge: 2000
                 },
                 name: 'tj'
-            }, function () {});
+            }, done);
         });
 
         it('should get data correctly', function (done) {
@@ -70,8 +70,44 @@ describe('DynamoDBStore', function () {
         });
 
     });
+    describe('Touching', function () {
+        var sess = {
+            cookie: {
+                maxAge: 2000
+            },
+            name: 'tj'
+        };
+        var maxAge = null;
+        before(function (done) {
+            var store = new DynamoDBStore({
+                client: client,
+                table: 'sessions-test'
+            });
+
+            maxAge = (Math.floor((Date.now() + 2000) / 1000) );
+            store.set('1234', sess, done);
+        });
+
+        it('should touch data correctly', function (done) {
+            this.timeout(4000);
+            var store = new DynamoDBStore({
+                client: client,
+                table: 'sessions-test'
+            });
+            setTimeout(function() {
+              store.touch('1234', sess, function (err, res) {
+                  if (err) throw err;
+                  var expires = res.Attributes.expires.N;
+                  expires.should.be.above(maxAge);
+                  (expires - maxAge).should.be.aboveOrEqual(1);
+                  done();
+              });
+            }, 1510);
+        });
+
+    });
     describe('Destroying', function () {
-        before(function () {
+        before(function (done) {
             var store = new DynamoDBStore({
                 client: client,
                 table: 'sessions-test'
@@ -81,7 +117,7 @@ describe('DynamoDBStore', function () {
                     maxAge: 2000
                 },
                 name: 'tj'
-            }, function () {});
+            }, done);
         });
 
         it('should destroy data correctly', function (done) {
@@ -117,6 +153,7 @@ describe('DynamoDBStore', function () {
         });
 
         it('should reap data correctly', function (done) {
+            this.timeout(5000); // increased timeout for local dynamo
             var store = new DynamoDBStore({
                 client: client,
                 table: 'sessions-test'
