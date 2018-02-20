@@ -98,4 +98,4 @@ connect-dynamodb is licensed under the [MIT license.](https://github.com/ca98am7
 
 ## Donations
 
-I made this in my spare time, so if you find it useful you can donate at my BTC address: `15rmktUUfB8hHh5u57qzsihVPBdZmMePZB`. Thank you very much!
+I made this in my spare time, so if you find it useful you can donate at my BTC address: `35dwLrmKHjCgGXyLzBSd6YaTgoXQA17Aoq`. Thank you very much!
