@@ -8,7 +8,6 @@
     "test": "mocha"
   },
   "dependencies": {
-    "aws-sdk": "*",
     "connect": "*"
   },
   "devDependencies": {
@@ -19,7 +18,9 @@
   "engines": {
     "node": "*"
   },
-  "optionalDependencies": {},
+  "optionalDependencies": {
+    "aws-sdk": "*",
+  },
   "homepage": "https://github.com/ca98am79/connect-dynamodb",
   "repository": {
     "type": "git",
