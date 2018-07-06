@@ -19,7 +19,7 @@
     "node": "*"
   },
   "optionalDependencies": {
-    "aws-sdk": "*",
+    "aws-sdk": "*"
   },
   "homepage": "https://github.com/ca98am79/connect-dynamodb",
   "repository": {
