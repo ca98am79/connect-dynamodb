@@ -1,3 +1,7 @@
+2.0.1 / 2018-07-07
+
+  * Make possible to use npm install --no-optional
+
 2.0.0 / 2017-08-19
 ==================
 
