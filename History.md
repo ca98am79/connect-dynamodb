@@ -1,3 +1,7 @@
+2.0.2 / 2018-09-12
+
+  * fix to use the hashKey provided in config
+
 2.0.1 / 2018-07-07
 
   * Make possible to use npm install --no-optional
