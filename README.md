@@ -70,6 +70,13 @@ With [express 4](http://expressjs.com/)
     var DynamoDBStore = require('connect-dynamodb')({session: session});
     app.use(session({store: new DynamoDBStore(options), secret: 'keyboard cat'}));
 
+OR 
+
+    var app = express();
+    var session = require('express-session');
+    var DynamoDBStore = require('connect-dynamodb')(session);
+    app.use(session({store: new DynamoDBStore(options), secret: 'keyboard cat'}));
+
 ## Testing
 
 If you want to run the tests locally and have the AWS environment variables setup you can run the command:
