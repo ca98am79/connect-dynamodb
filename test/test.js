@@ -9,6 +9,20 @@ if (process.env.AWS_CONFIG_JSON) {
     client = new AWS.DynamoDB(config);
 }
 
+describe('ConnectDynamoDB', function () {
+    describe('Constructor', function () {
+        it('should take session as argument', function () {
+            const dynamoDbStore = require(__dirname + '/../lib/connect-dynamodb.js')(session);
+            dynamoDbStore.should.be.an.instanceOf(Function);
+        });
+
+        it('should take session as one of the options', function () {
+            const dynamoDbStore = require(__dirname + '/../lib/connect-dynamodb.js')({session: session});
+            dynamoDbStore.should.be.an.instanceOf(Function);
+        });
+    })
+})
+
 describe('DynamoDBStore', function () {
     describe('Instantiation', function () {
         it('should be able to be created', function () {
