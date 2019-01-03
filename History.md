@@ -1,3 +1,7 @@
+2.0.3 / 2019-01-02
+
+  * Support passing express-session directly to the adapter (https://github.com/ca98am79/connect-dynamodb/issues/54)
+
 2.0.2 / 2018-09-12
 
   * fix to use the hashKey provided in config
