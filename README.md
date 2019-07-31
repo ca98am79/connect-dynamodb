@@ -41,7 +41,15 @@ Rational defaults are set but can be overridden in the options object. Credentia
 
         // Optional ProvisionedThroughput params, defaults to 5
         readCapacityUnits: 25,
-        writeCapacityUnits: 25
+        writeCapacityUnits: 25,
+
+        // Optional special keys that will be inserted directly into your table (in addition to remaining in the session)
+        specialKeys: [
+            {
+                name: 'userId', // The session key
+                type: 'S' // The DyanamoDB attribute type
+            }
+        ]
     };
 
 With [connect](https://github.com/senchalabs/connect)
@@ -67,7 +75,7 @@ With [express 4](http://expressjs.com/)
     var DynamoDBStore = require('connect-dynamodb')({session: session});
     app.use(session({store: new DynamoDBStore(options), secret: 'keyboard cat'}));
 
-OR 
+OR
 
     var app = express();
     var session = require('express-session');
