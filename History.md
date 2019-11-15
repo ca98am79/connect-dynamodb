@@ -1,3 +1,7 @@
+2.0.4 / 2019-11-15
+
+  * Don't crash on invalid session data stored in DDB (https://github.com/ca98am79/connect-dynamodb/issues/44)
+
 2.0.3 / 2019-01-02
 
   * Support passing express-session directly to the adapter (https://github.com/ca98am79/connect-dynamodb/issues/54)
