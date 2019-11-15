@@ -1,9 +1,16 @@
-var should = require('should'),
+var fs = require('fs'),
+    should = require('should'),
     session = require('express-session'),
+    sinon = require('sinon'),
     DynamoDBStore = require(__dirname + '/../lib/connect-dynamodb.js')({session: session});
 
 var client;
-if (process.env.AWS_CONFIG_JSON) {
+
+var config = fs.exists('./aws-config.json') && fs.readFileSync('./aws-config.json');
+if (config) {
+    client = new AWS.DynamoDB(JSON.parse(config));
+}
+else if (process.env.AWS_CONFIG_JSON) {
     var AWS = require('aws-sdk');
     var config = JSON.parse(process.env.AWS_CONFIG_JSON);
     client = new AWS.DynamoDB(config);
@@ -54,6 +61,8 @@ describe('DynamoDBStore', function () {
 
     });
     describe('Getting', function () {
+        let sandbox = sinon.createSandbox();
+
         before(function (done) {
             var store = new DynamoDBStore({
                 client: client,
@@ -67,6 +76,11 @@ describe('DynamoDBStore', function () {
             }, done);
         });
 
+        after(function (done) {
+            sandbox.restore();
+            done();
+        });
+
         it('should get data correctly', function (done) {
             var store = new DynamoDBStore({
                 client: client,
@@ -78,6 +92,24 @@ describe('DynamoDBStore', function () {
                     maxAge: 2000
                 });
                 res.name.should.eql('tj');
+
+                done();
+            });
+        });
+
+        it('does not crash on invalid session object', function (done) {
+            var store = new DynamoDBStore({
+                client: client,
+                table: 'sessions-test'
+            });
+
+            sandbox.stub(store.client, 'getItem').callsArgWith(1, null, {
+                Item: {}
+            });
+
+            store.get('9876', function (err, res) {
+                if (err) throw err;
+                should.not.exist(res);
 
                 done();
             });

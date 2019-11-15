@@ -5,7 +5,8 @@
   "author": "Mike Carson <ca98am79@gmail.com> (http://ca98am79.com)",
   "main": "./index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "debugtest": "mocha --inspect-brk"
   },
   "dependencies": {
     "connect": "*"
@@ -13,6 +14,7 @@
   "devDependencies": {
     "express-session": "*",
     "mocha": "*",
+    "sinon": "*",
     "should": "*"
   },
   "engines": {
