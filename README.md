@@ -96,6 +96,45 @@ export AWS_CONFIG_JSON='{"endpoint": "http://127.0.0.1:8000", "region": "us-east
 npm test
 ```
 
+## IAM Permissions
+Connect DynamoDB requires the following IAM permissions for DynamoDB:
+- CreateTable
+- PutItem
+- DeleteItem
+- GetItem
+- Scan
+- UpdateItem
+
+Sample IAM policy (with least privilege):
+
+_(Replace __\<AWS ACCOUNT ID\>__, __\<TABLE NAME\>__ and __\<SOURCE IP AND BITMASK\>__)._
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:CreateTable",
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:UpdateItem"
+            ],
+            "Resource": "arn:aws:dynamodb:*:<AWS ACCOUNT ID>:table/<TABLE NAME>",
+            "Condition": {
+                "IpAddress": {
+                    "aws:SourceIp": "<SOURCE IP AND BITMASK>"
+                }
+            }
+        }
+    ]
+}
+```
+
 ## License
 
 connect-dynamodb is licensed under the [MIT license.](https://github.com/ca98am79/connect-dynamodb/blob/master/LICENSE.txt)
