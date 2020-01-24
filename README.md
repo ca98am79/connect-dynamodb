@@ -124,12 +124,7 @@ _(Replace __\<AWS ACCOUNT ID\>__, __\<TABLE NAME\>__ and __\<SOURCE IP AND BITMA
                 "dynamodb:Scan",
                 "dynamodb:UpdateItem"
             ],
-            "Resource": "arn:aws:dynamodb:*:<AWS ACCOUNT ID>:table/<TABLE NAME>",
-            "Condition": {
-                "IpAddress": {
-                    "aws:SourceIp": "<SOURCE IP AND BITMASK>"
-                }
-            }
+            "Resource": "arn:aws:dynamodb:*:<AWS ACCOUNT ID>:table/<TABLE NAME>"
         }
     ]
 }
