@@ -118,6 +118,7 @@ _(Replace __\<AWS ACCOUNT ID\>__, __\<TABLE NAME\>__ and __\<SOURCE IP AND BITMA
             "Effect": "Allow",
             "Action": [
                 "dynamodb:CreateTable",
+                "dynamodb:DescribeTable",
                 "dynamodb:PutItem",
                 "dynamodb:DeleteItem",
                 "dynamodb:GetItem",
