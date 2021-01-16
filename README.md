@@ -18,6 +18,7 @@ Rational defaults are set but can be overridden in the options object. Credentia
   - `table` Optional DynamoDB server session table name (defaults to "sessions")
   - `hashKey` Optional hash key (defaults to "id")
   - `prefix` Optional key prefix (defaults to "sess")
+  - `payPerRequest` Optional boolean when true will set the billing mode to `PAY_PER_REQUEST`
   - `reapInterval` Legacy session expiration cleanup in milliseconds.  Should instead enable [DynamoDB TTL](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) and select the `expires` field.  **BREAKING CHANGE** from v1.0.11 to v2.0.0 for reaping sessions with changes to the format of the expires field timestamp.
 
 ## Usage
@@ -42,7 +43,12 @@ Rational defaults are set but can be overridden in the options object. Credentia
         // Optional ProvisionedThroughput params, defaults to 5
         readCapacityUnits: 25,
         writeCapacityUnits: 25
+
+        // Optional payPerRequest will set read / write capacity units to 0
+        // and Billing Mode to PAY_PER_REQUEST
+        payPerRequest: false
     };
+
 
 With [connect](https://github.com/senchalabs/connect)
 
