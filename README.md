@@ -49,7 +49,9 @@ Rational defaults are set but can be overridden in the options object. Credentia
                 name: 'userId', // The session key
                 type: 'S' // The DyanamoDB attribute type
             }
-        ]
+        ],
+        // Optional skip throw missing special keys in session, if set true
+        skipThrowMissingSpecialKeys: true,
     };
 
 With [connect](https://github.com/senchalabs/connect)
