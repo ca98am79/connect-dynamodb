@@ -1,6 +1,6 @@
 # Connect DynamoDB
 
-connect-dynamodb is a DynamoDB session store backed by the [aws-sdk](https://github.com/aws/aws-sdk-js)
+connect-dynamodb is a DynamoDB session store backed by the [2.x aws-sdk](https://github.com/aws/aws-sdk-js)
 
 ## Installation
 
