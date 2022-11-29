@@ -3,6 +3,12 @@
   "description": "DynamoDB session store for Connect",
   "version": "3.0.0",
   "author": "Mike Carson <ca98am79@gmail.com> (http://ca98am79.com)",
+  "contributors": [
+    {
+      "name": "Lance Gliser",
+      "email": "lance.gliser@torch.ai"
+    }
+  ],
   "main": "./index.js",
   "scripts": {
     "test": "mocha",
