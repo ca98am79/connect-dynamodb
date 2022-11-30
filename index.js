@@ -1,2 +1,1 @@
-
-module.exports = require('./lib/connect-dynamodb');
+module.exports = require("./lib/connect-dynamodb");
