@@ -36,10 +36,11 @@ describe("ConnectDynamoDB", () => {
 });
 
 describe("DynamoDBStore", () => {
+  const tableName = "sessions-test";
   const DynamoDBStore = ConnectDynamoDB({ session });
   const store = new DynamoDBStore({
     client: client,
-    table: "sessions-test",
+    table: tableName,
   });
   const sessionId = Math.random().toString();
 
@@ -150,23 +151,25 @@ describe("DynamoDBStore", () => {
   });
 
   describe("Setting", () => {
-    it("should store data correctly", (done) => {
-      const name = Math.random().toString();
+    it("should store data correctly", async () => {
+      return new Promise((resolve, reject) => {
+        const name = Math.random().toString();
 
-      store.set(
-        sessionId,
-        {
-          cookie: {
-            maxAge: 2000,
+        store.set(
+          sessionId,
+          {
+            cookie: {
+              maxAge: 2000,
+            },
+            name,
           },
-          name,
-        },
-        (err) => {
-          if (err) throw err;
+          (err) => {
+            if (err) return reject(err);
 
-          done();
-        }
-      );
+            resolve();
+          }
+        );
+      });
     });
   });
 
@@ -187,32 +190,36 @@ describe("DynamoDBStore", () => {
       );
     });
 
-    after((done) => {
+    after(async () => {
       sandbox.restore();
-      done();
     });
 
-    it("should get data correctly", (done) => {
-      store.get(sessionId, function (err, res) {
-        if (err) throw err;
-        res.cookie.should.eql({ maxAge: 2000 });
-        res.name.should.eql(name);
+    it("should get data correctly", async () => {
+      return new Promise((resolve, reject) => {
+        store.get(sessionId, function (err, res) {
+          if (err) return reject(err);
 
-        done();
+          res.cookie.should.eql({ maxAge: 2000 });
+          res.name.should.eql(name);
+
+          resolve();
+        });
       });
     });
 
-    it("does not crash on invalid session object", (done) => {
-      // TODO I need to understand this test better to update it
-      sandbox.stub(store.client, "getItem").callsArgWith(1, null, {
-        Item: {},
-      });
+    it("does not crash on invalid session object", async () => {
+      return new Promise((resolve, reject) => {
+        // TODO I need to understand this test better to update it TypeError: Cannot stub non-existent property getItem
+        sandbox.stub(store.client, "getItem").callsArgWith(1, null, {
+          Item: {},
+        });
 
-      store.get(sessionId + "-not-real", function (err, res) {
-        if (err) throw err;
-        should.not.exist(res);
+        store.get(sessionId + "-not-real", function (err, res) {
+          if (err) return reject(err);
+          should.not.exist(res);
 
-        done();
+          resolve();
+        });
       });
     });
   });
@@ -232,19 +239,21 @@ describe("DynamoDBStore", () => {
       store.set(sessionId, sess, done);
     });
 
-    it("should touch data correctly", (done) => {
-      this.timeout(4000);
+    // TODO ValidationException: The number of conditions on the keys is invalid
+    it("should touch data correctly", async () => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          store.touch(sessionId, sess, (err, res) => {
+            if (err) return reject(err);
 
-      setTimeout(() => {
-        store.touch(sessionId, sess, function (err, res) {
-          if (err) throw err;
-          const expires = res.Attributes.expires.N;
-          expires.should.be.above(maxAge);
-          (expires - maxAge).should.be.aboveOrEqual(1);
-          done();
-        });
-      }, 1510);
-    });
+            const expires = res.Attributes.expires.N;
+            expires.should.be.above(maxAge);
+            (expires - maxAge).should.be.aboveOrEqual(1);
+            resolve();
+          });
+        }, 1510);
+      });
+    }).timeout(4000);
   });
 
   describe("Destroying", () => {
@@ -265,18 +274,21 @@ describe("DynamoDBStore", () => {
       );
     });
 
-    it("should destroy data correctly", (done) => {
-      store.destroy(sessionId, function (err) {
-        if (err) throw err;
+    // TODO ValidationException: The number of conditions on the keys is invalid
+    it("should destroy data correctly", async () => {
+      return new Promise((resolve, reject) => {
+        store.destroy(sessionId, (err) => {
+          if (err) return reject(err);
 
-        store.get(sessionId, function (err, res) {
-          if (err) throw err;
-          should.not.exist(res);
+          store.get(sessionId, (err, res) => {
+            if (err) return reject(err);
+            should.not.exist(res);
 
-          done();
+            resolve();
+          });
         });
       });
-    });
+    }).timeout(4000);
   });
 
   describe("Reaping", () => {
@@ -297,19 +309,24 @@ describe("DynamoDBStore", () => {
       );
     });
 
-    it("should reap data correctly", (done) => {
-      this.timeout(5000); // increased timeout for local dynamo
-      store.reap(function (err) {
-        if (err) throw err;
+    it("should reap data correctly", async () => {
+      return new Promise((resolve, reject) => {
+        store.reap((err) => {
+          if (err) return reject(err);
 
-        store.get(sessionId, function (err, res) {
-          if (err) throw err;
-          should.not.exist(res);
+          store.get(sessionId, (err, res) => {
+            if (err) return reject(err);
+            should.not.exist(res);
 
-          done();
+            resolve();
+          });
         });
       });
-    });
+    }).timeout(5000);
+  });
+
+  after(async () => {
+    await client.send(new DeleteTableCommand({ TableName: tableName }));
   });
 });
 
