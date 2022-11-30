@@ -1,7 +1,12 @@
 const should = require("should"),
   session = require("express-session"),
   sinon = require("sinon");
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const {
+  DynamoDBClient,
+  CreateTableCommand,
+  DeleteTableCommand,
+  ScalarAttributeType,
+} = require("@aws-sdk/client-dynamodb");
 const ConnectDynamoDB = require(__dirname + "/../lib/connect-dynamodb.js");
 
 const client = new DynamoDBClient({
@@ -61,6 +66,86 @@ describe("DynamoDBStore", () => {
           clientEndpoint.protocol.should.equal(protocol);
         })
         .finally(done);
+    });
+  });
+
+  describe("Initializing", () => {
+    describe("creating a table", () => {
+      const tableName = "sessions-test-" + Math.random().toString();
+      const store = new DynamoDBStore({
+        client,
+        table: tableName,
+      });
+      const describeSessionsTableSpy = sinon.spy(
+        store,
+        "describeSessionsTable"
+      );
+      const createSessionsTableSpy = sinon.spy(store, "createSessionsTable");
+
+      it("Should create the table if it doesn't exist and skip subsequent calls", async () => {
+        describeSessionsTableSpy.notCalled.should.equal(true);
+        createSessionsTableSpy.notCalled.should.equal(true);
+        await store.initialize();
+        describeSessionsTableSpy.calledOnce.should.equal(true);
+        createSessionsTableSpy.calledOnce.should.equal(true);
+        await store.initialize();
+        describeSessionsTableSpy.calledOnce.should.equal(true);
+        createSessionsTableSpy.calledOnce.should.equal(true);
+      });
+
+      after(async () => {
+        await client.send(new DeleteTableCommand({ TableName: tableName }));
+      });
+    });
+
+    describe("using an existing table", () => {
+      const tableName = "sessions-test-" + Math.random().toString();
+      const store = new DynamoDBStore({
+        client,
+        table: tableName,
+      });
+      const describeSessionsTableSpy = sinon.spy(
+        store,
+        "describeSessionsTable"
+      );
+      const createSessionsTableSpy = sinon.spy(store, "createSessionsTable");
+
+      before(async () => {
+        const hashKey = "id";
+        await client.send(
+          new CreateTableCommand({
+            TableName: tableName,
+            AttributeDefinitions: [
+              {
+                AttributeName: hashKey,
+                AttributeType: ScalarAttributeType.S,
+              },
+            ],
+            KeySchema: [
+              {
+                AttributeName: hashKey,
+                KeyType: "HASH",
+              },
+            ],
+            ProvisionedThroughput: {
+              ReadCapacityUnits: 5,
+              WriteCapacityUnits: 5,
+            },
+          })
+        );
+      });
+
+      it("should not call the create table function", async () => {
+        describeSessionsTableSpy.notCalled.should.equal(true);
+        createSessionsTableSpy.notCalled.should.equal(true);
+        await store.initialize();
+        describeSessionsTableSpy.calledOnce.should.equal(true);
+        createSessionsTableSpy.notCalled.should.equal(true);
+      });
+
+      after(async () => {
+        await client.send(new DeleteTableCommand({ TableName: tableName }));
+      });
     });
   });
 
