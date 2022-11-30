@@ -106,7 +106,10 @@ docker run -it --rm \
 ```
 
 ```bash
-export AWS_CONFIG_JSON='{"endpoint": "http://127.0.0.1:8000", "region": "us-east-1", "accessKeyId": "accesskey", "secretAccessKey": "secretaccesskey"}'
+export AWS_REGION=us-east-1
+export AWS_ACCESS_KEY_ID=accesskey
+export AWS_SECRET_ACCESS_KEY=secretaccesskey
+export ENDPOINT=http://127.0.0.1:8000
 npm test
 ```
 

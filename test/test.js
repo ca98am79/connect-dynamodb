@@ -4,7 +4,17 @@ const should = require("should"),
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const ConnectDynamoDB = require(__dirname + "/../lib/connect-dynamodb.js");
 
-let client;
+const client = new DynamoDBClient({
+  region: process.env.AWS_REGION,
+  // deangiberson/aws-dynamodb-local uses http://127.0.0.1:8000
+  // LocalStack uses http://localhost:4566
+  endpoint: process.env.ENDPOINT,
+  // These are automatically loaded in DynamoDBClient if the env below are specified.
+  // credentials: {
+  //   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  //   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  // },
+});
 
 describe("ConnectDynamoDB", () => {
   describe("Constructor", () => {
