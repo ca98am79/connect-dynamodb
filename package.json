@@ -20,6 +20,7 @@
   "devDependencies": {
     "express-session": "*",
     "mocha": "*",
+    "prettier": "^2.8.0",
     "should": "*",
     "sinon": "*"
   },
