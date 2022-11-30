@@ -1,3 +1,11 @@
+2.0.6 / 2022-11-30
+
+  *  Update to explicitly require aws-sdk 2.x version.
+
+2.0.5 / 2021-10-18
+
+  *  add optional special keys that will be inserted directly into your table (in addition to remaining in the session)
+
 2.0.4 / 2019-11-15
 
   * Don't crash on invalid session data stored in DDB (https://github.com/ca98am79/connect-dynamodb/issues/44)
