@@ -14,8 +14,9 @@
   "devDependencies": {
     "express-session": "*",
     "mocha": "*",
-    "sinon": "*",
-    "should": "*"
+    "prettier": "^2.8.0",
+    "should": "*",
+    "sinon": "*"
   },
   "engines": {
     "node": "*"
