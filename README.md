@@ -17,9 +17,10 @@ unless the `client` options is provided to override them.
 - `table` Optional DynamoDB server session table name (defaults to "sessions")
 - `hashKey` Optional hash key (defaults to "id")
 - `prefix` Optional key prefix (defaults to "sess")
-- `reapInterval` Legacy session expiration cleanup in milliseconds.  
-  Should instead enable [DynamoDB TTL](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html)
-  and select the `expires` field.
+- `reapInterval` Legacy session expiration cleanup in milliseconds.
+  ☣️ Legacy reap behaviors use DynamoDB [`scan`](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-dynamodb/classes/scancommand.html)
+  functionality that can incur significant costs. Should instead enable [DynamoDB TTL](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html)
+  and select the `expires` field. TODO should we just remove it since we're already making a breaking change?
 
 ## Usage
 
