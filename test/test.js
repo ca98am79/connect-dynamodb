@@ -32,43 +32,51 @@ describe("ConnectDynamoDB", () => {
 
 describe("DynamoDBStore", () => {
   const DynamoDBStore = ConnectDynamoDB({ session });
+  const store = new DynamoDBStore({
+    client: client,
+    table: "sessions-test",
+  });
+  const sessionId = Math.random().toString();
 
   describe("Instantiation", () => {
     it("should be able to be created", () => {
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
       store.should.be.an.instanceOf(DynamoDBStore);
     });
 
-    it("should accept a client as an option", () => {
-      const endpoint = "http://localhost:23431";
-      var store = new DynamoDBStore({
+    it("should accept a client as an option", (done) => {
+      const hostname = "localhost";
+      const port = 23431;
+      const protocol = "http";
+      const endpoint = `${protocol}://${hostname}:${port}`;
+      const store = new DynamoDBStore({
         client: new DynamoDBClient({ endpoint }),
         table: "sessions-test",
       });
       store.should.be.an.instanceOf(DynamoDBStore);
-      store.client.endpoint.should.equal(endpoint);
+      store.client.config
+        .endpoint()
+        .then((clientEndpoint) => {
+          clientEndpoint.hostname.should.equal(hostname);
+          clientEndpoint.port.should.equal(port);
+          clientEndpoint.protocol.should.equal(protocol);
+        })
+        .finally(done);
     });
   });
 
   describe("Setting", () => {
-    it("should store data correctly", function (done) {
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
+    it("should store data correctly", (done) => {
+      const name = Math.random().toString();
 
       store.set(
-        "123",
+        sessionId,
         {
           cookie: {
             maxAge: 2000,
           },
-          name: "tj",
+          name,
         },
-        function (err) {
+        (err) => {
           if (err) throw err;
 
           done();
@@ -76,58 +84,46 @@ describe("DynamoDBStore", () => {
       );
     });
   });
-  describe("Getting", () => {
-    let sandbox = sinon.createSandbox();
 
-    before(function (done) {
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
+  describe("Getting", () => {
+    const sandbox = sinon.createSandbox();
+    const name = Math.random().toString();
+
+    before((done) => {
       store.set(
-        "1234",
+        sessionId,
         {
           cookie: {
             maxAge: 2000,
           },
-          name: "tj",
+          name,
         },
         done
       );
     });
 
-    after(function (done) {
+    after((done) => {
       sandbox.restore();
       done();
     });
 
-    it("should get data correctly", function (done) {
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
-      store.get("1234", function (err, res) {
+    it("should get data correctly", (done) => {
+      store.get(sessionId, function (err, res) {
         if (err) throw err;
-        res.cookie.should.eql({
-          maxAge: 2000,
-        });
-        res.name.should.eql("tj");
+        res.cookie.should.eql({ maxAge: 2000 });
+        res.name.should.eql(name);
 
         done();
       });
     });
 
-    it("does not crash on invalid session object", function (done) {
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
-
+    it("does not crash on invalid session object", (done) => {
+      // TODO I need to understand this test better to update it
       sandbox.stub(store.client, "getItem").callsArgWith(1, null, {
         Item: {},
       });
 
-      store.get("9876", function (err, res) {
+      store.get(sessionId + "-not-real", function (err, res) {
         if (err) throw err;
         should.not.exist(res);
 
@@ -135,34 +131,29 @@ describe("DynamoDBStore", () => {
       });
     });
   });
+
   describe("Touching", () => {
-    var sess = {
+    const name = Math.random().toString();
+    const sess = {
       cookie: {
         maxAge: 2000,
       },
-      name: "tj",
+      name,
     };
-    var maxAge = null;
-    before(function (done) {
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
+    let maxAge = null;
 
+    before((done) => {
       maxAge = Math.floor((Date.now() + 2000) / 1000);
-      store.set("1234", sess, done);
+      store.set(sessionId, sess, done);
     });
 
-    it("should touch data correctly", function (done) {
+    it("should touch data correctly", (done) => {
       this.timeout(4000);
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
+
       setTimeout(() => {
-        store.touch("1234", sess, function (err, res) {
+        store.touch(sessionId, sess, function (err, res) {
           if (err) throw err;
-          var expires = res.Attributes.expires.N;
+          const expires = res.Attributes.expires.N;
           expires.should.be.above(maxAge);
           (expires - maxAge).should.be.aboveOrEqual(1);
           done();
@@ -170,33 +161,30 @@ describe("DynamoDBStore", () => {
       }, 1510);
     });
   });
+
   describe("Destroying", () => {
-    before(function (done) {
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
+    // We'll use a new session id here to avoid affecting the other tests
+    const sessionId = Math.random().toString();
+    const name = Math.random().toString();
+
+    before((done) => {
       store.set(
-        "12345",
+        sessionId,
         {
           cookie: {
             maxAge: 2000,
           },
-          name: "tj",
+          name,
         },
         done
       );
     });
 
-    it("should destroy data correctly", function (done) {
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
-      store.destroy("12345", function (err) {
+    it("should destroy data correctly", (done) => {
+      store.destroy(sessionId, function (err) {
         if (err) throw err;
 
-        store.get("12345", function (err, res) {
+        store.get(sessionId, function (err, res) {
           if (err) throw err;
           should.not.exist(res);
 
@@ -205,34 +193,31 @@ describe("DynamoDBStore", () => {
       });
     });
   });
+
   describe("Reaping", () => {
-    before(function (done) {
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
+    // We'll use a new session id here to avoid affecting the other tests
+    const sessionId = Math.random().toString();
+    const name = Math.random().toString();
+
+    before((done) => {
       store.set(
-        "123456",
+        sessionId,
         {
           cookie: {
             maxAge: -20000,
           },
-          name: "tj",
+          name,
         },
         done
       );
     });
 
-    it("should reap data correctly", function (done) {
+    it("should reap data correctly", (done) => {
       this.timeout(5000); // increased timeout for local dynamo
-      var store = new DynamoDBStore({
-        client: client,
-        table: "sessions-test",
-      });
       store.reap(function (err) {
         if (err) throw err;
 
-        store.get("123456", function (err, res) {
+        store.get(sessionId, function (err, res) {
           if (err) throw err;
           should.not.exist(res);
 
