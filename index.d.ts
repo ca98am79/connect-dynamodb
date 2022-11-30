@@ -1,4 +1,4 @@
-declare module 'connect-dynamodb' {
+declare module "connect-dynamodb" {
   export = connect_dynamodb;
 }
 
