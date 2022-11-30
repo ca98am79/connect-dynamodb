@@ -9,13 +9,13 @@ let client;
 describe("ConnectDynamoDB", () => {
   describe("Constructor", () => {
     it("should take session as argument", () => {
-      const dynamoDbStore = ConnectDynamoDB(session);
-      dynamoDbStore.should.be.an.instanceOf(Function);
+      const StoreConstructor = ConnectDynamoDB(session);
+      expectDynamoDBStore(StoreConstructor);
     });
 
     it("should take session as one of the options", () => {
-      const dynamoDbStore = ConnectDynamoDB({ session: session });
-      dynamoDbStore.should.be.an.instanceOf(Function);
+      const StoreConstructor = ConnectDynamoDB({ session: session });
+      expectDynamoDBStore(StoreConstructor);
     });
   });
 });
@@ -232,3 +232,10 @@ describe("DynamoDBStore", () => {
     });
   });
 });
+
+const expectDynamoDBStore = (DynamoDBStore) => {
+  DynamoDBStore.should.be.an.instanceOf(Function);
+  const store = new DynamoDBStore({ table: "sessions-test" });
+  store.should.be.an.instanceOf(DynamoDBStore);
+  store.client.should.be.instanceOf(DynamoDBClient);
+};
