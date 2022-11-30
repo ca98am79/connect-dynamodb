@@ -1,34 +1,30 @@
 const should = require("should"),
   session = require("express-session"),
-  sinon = require("sinon"),
-  DynamoDBStore = require(__dirname + "/../lib/connect-dynamodb.js")({
-    session: session,
-  });
+  sinon = require("sinon");
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+const ConnectDynamoDB = require(__dirname + "/../lib/connect-dynamodb.js");
 
 let client;
 
-describe("ConnectDynamoDB", function () {
-  describe("Constructor", function () {
-    it("should take session as argument", function () {
-      const dynamoDbStore = require(__dirname + "/../lib/connect-dynamodb.js")(
-        session
-      );
+describe("ConnectDynamoDB", () => {
+  describe("Constructor", () => {
+    it("should take session as argument", () => {
+      const dynamoDbStore = ConnectDynamoDB(session);
       dynamoDbStore.should.be.an.instanceOf(Function);
     });
 
-    it("should take session as one of the options", function () {
-      const dynamoDbStore = require(__dirname + "/../lib/connect-dynamodb.js")({
-        session: session,
-      });
+    it("should take session as one of the options", () => {
+      const dynamoDbStore = ConnectDynamoDB({ session: session });
       dynamoDbStore.should.be.an.instanceOf(Function);
     });
   });
 });
 
-describe("DynamoDBStore", function () {
-  describe("Instantiation", function () {
-    it("should be able to be created", function () {
+describe("DynamoDBStore", () => {
+  const DynamoDBStore = ConnectDynamoDB({ session });
+
+  describe("Instantiation", () => {
+    it("should be able to be created", () => {
       var store = new DynamoDBStore({
         client: client,
         table: "sessions-test",
@@ -47,7 +43,7 @@ describe("DynamoDBStore", function () {
     });
   });
 
-  describe("Setting", function () {
+  describe("Setting", () => {
     it("should store data correctly", function (done) {
       var store = new DynamoDBStore({
         client: client,
@@ -70,7 +66,7 @@ describe("DynamoDBStore", function () {
       );
     });
   });
-  describe("Getting", function () {
+  describe("Getting", () => {
     let sandbox = sinon.createSandbox();
 
     before(function (done) {
@@ -129,7 +125,7 @@ describe("DynamoDBStore", function () {
       });
     });
   });
-  describe("Touching", function () {
+  describe("Touching", () => {
     var sess = {
       cookie: {
         maxAge: 2000,
@@ -153,7 +149,7 @@ describe("DynamoDBStore", function () {
         client: client,
         table: "sessions-test",
       });
-      setTimeout(function () {
+      setTimeout(() => {
         store.touch("1234", sess, function (err, res) {
           if (err) throw err;
           var expires = res.Attributes.expires.N;
@@ -164,7 +160,7 @@ describe("DynamoDBStore", function () {
       }, 1510);
     });
   });
-  describe("Destroying", function () {
+  describe("Destroying", () => {
     before(function (done) {
       var store = new DynamoDBStore({
         client: client,
@@ -199,7 +195,7 @@ describe("DynamoDBStore", function () {
       });
     });
   });
-  describe("Reaping", function () {
+  describe("Reaping", () => {
     before(function (done) {
       var store = new DynamoDBStore({
         client: client,
