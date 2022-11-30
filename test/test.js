@@ -174,7 +174,6 @@ describe("DynamoDBStore", () => {
   });
 
   describe("Getting", () => {
-    const sandbox = sinon.createSandbox();
     const name = Math.random().toString();
 
     before((done) => {
@@ -188,10 +187,6 @@ describe("DynamoDBStore", () => {
         },
         done
       );
-    });
-
-    after(async () => {
-      sandbox.restore();
     });
 
     it("should get data correctly", async () => {
@@ -208,20 +203,9 @@ describe("DynamoDBStore", () => {
     });
 
     it("does not crash on invalid session object", async () => {
-      return new Promise((resolve, reject) => {
-        // TODO I need to understand this test better to update it TypeError: Cannot stub non-existent property getItem
-        sandbox.stub(store.client, "getItem").callsArgWith(1, null, {
-          Item: {},
-        });
-
-        store.get(sessionId + "-not-real", function (err, res) {
-          if (err) return reject(err);
-          should.not.exist(res);
-
-          resolve();
-        });
-      });
-    });
+      const session = store.getParsedSession({ Item: {} });
+      should.not.exist(session);
+    }).timeout(4000);
   });
 
   describe("Touching", () => {
@@ -272,7 +256,6 @@ describe("DynamoDBStore", () => {
       );
     });
 
-    // TODO ValidationException: The number of conditions on the keys is invalid
     it("should destroy data correctly", async () => {
       return new Promise((resolve, reject) => {
         store.destroy(sessionId, (err) => {
