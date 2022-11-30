@@ -239,16 +239,14 @@ describe("DynamoDBStore", () => {
       store.set(sessionId, sess, done);
     });
 
-    // TODO ValidationException: The number of conditions on the keys is invalid
     it("should touch data correctly", async () => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          store.touch(sessionId, sess, (err, res) => {
+          store.touch(sessionId, sess, (err, { expires }) => {
             if (err) return reject(err);
-
-            const expires = res.Attributes.expires.N;
             expires.should.be.above(maxAge);
             (expires - maxAge).should.be.aboveOrEqual(1);
+
             resolve();
           });
         }, 1510);
@@ -326,7 +324,7 @@ describe("DynamoDBStore", () => {
   });
 
   after(async () => {
-    await client.send(new DeleteTableCommand({ TableName: tableName }));
+    // await client.send(new DeleteTableCommand({ TableName: tableName }));
   });
 });
 
