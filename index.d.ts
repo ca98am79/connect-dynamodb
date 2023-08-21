@@ -6,10 +6,6 @@ import {
   ScalarAttributeType,
 } from "@aws-sdk/client-dynamodb";
 
-declare module "connect-dynamodb" {
-  export = ConnectDynamoDB;
-}
-
 declare function ConnectDynamoDB<Session extends Record<string, unknown>>(
   connect: typeof session
 ): DynamoDBStore<Session>;
