@@ -1,3 +1,7 @@
+# 3.0.1 / 2023-08-24
+
+- fix: exports and export assignments are not permitted and not use export default (https://github.com/ca98am79/connect-dynamodb/pull/84)
+
 # 3.0.0 / 2022-12-01
 
 - Update to V3 API
