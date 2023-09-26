@@ -1,3 +1,7 @@
+# 3.0.2 / 2023-09-26
+
+- Fix Bug Where Cookie's maxAge is Incorrectly Applied as Divided by 1000 to expires (https://github.com/ca98am79/connect-dynamodb/pull/83)
+
 # 3.0.1 / 2023-08-24
 
 - fix: exports and export assignments are not permitted and not use export default (https://github.com/ca98am79/connect-dynamodb/pull/84)
