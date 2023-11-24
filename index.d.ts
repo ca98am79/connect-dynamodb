@@ -32,6 +32,11 @@ declare namespace ConnectDynamoDB {
      * Upgrade to DynamoDB's TimeToLive configuration.
      */
     reapInterval?: number;
+    /**
+     * Disable initialization.
+     * Useful if the table already exists or if you want to skip existence checks in a serverless environment such as AWS Lambda.
+     */
+    initialized?: boolean;
   }
 
   interface DynamoDBStoreOptionsSpecialKey {

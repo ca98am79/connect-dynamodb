@@ -148,6 +148,28 @@ describe("DynamoDBStore", () => {
         await client.send(new DeleteTableCommand({ TableName: tableName }));
       });
     });
+
+    describe("skip initializing", () => {
+      const tableName = "sessions-test-" + Math.random().toString();
+      const store = new DynamoDBStore({
+        client,
+        table: tableName,
+        initialized: true,
+      });
+      const describeSessionsTableSpy = sinon.spy(
+        store,
+        "describeSessionsTable"
+      );
+      const createSessionsTableSpy = sinon.spy(store, "createSessionsTable");
+
+      it("Should skip table existence checks and creation", async () => {
+        describeSessionsTableSpy.notCalled.should.equal(true);
+        createSessionsTableSpy.notCalled.should.equal(true);
+        await store.initialize();
+        describeSessionsTableSpy.notCalled.should.equal(true);
+        createSessionsTableSpy.notCalled.should.equal(true);
+      });
+    });
   });
 
   describe("Setting", () => {
