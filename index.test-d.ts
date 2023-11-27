@@ -33,6 +33,7 @@ const options: DynamoDBStoreOptions = {
   writeCapacityUnits: 25,
   specialKeys: specialKeysOptions,
   skipThrowMissingSpecialKeys: true,
+  initialized: true,
 };
 
 expectType<express.RequestHandler>(
