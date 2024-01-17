@@ -5,10 +5,20 @@ on:
     branches: ["master"]
   pull_request:
     branches: ["master"]
+env:
+  AWS_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: accesskey
+  AWS_SECRET_ACCESS_KEY: secretaccesskey
+  ENDPOINT: http://127.0.0.1:4566
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      localstack:
+        image: localstack/localstack
+        ports:
+          - "127.0.0.1:4566:4566"
     strategy:
       matrix:
         node-version: [18.x, 20.x]
