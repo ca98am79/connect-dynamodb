@@ -83,13 +83,13 @@ describe("DynamoDBStore", () => {
       );
       const createSessionsTableSpy = sinon.spy(store, "createSessionsTable");
 
-      it("Should create the table if it doesn't exist and skip subsequent calls", async () => {
+      it("Should create the table if it doesn't exist and skip subsequent calls", () => {
         describeSessionsTableSpy.notCalled.should.equal(true);
         createSessionsTableSpy.notCalled.should.equal(true);
-        await store.initialize();
+        store.initialize();
         describeSessionsTableSpy.calledOnce.should.equal(true);
         createSessionsTableSpy.calledOnce.should.equal(true);
-        await store.initialize();
+        store.initialize();
         describeSessionsTableSpy.calledOnce.should.equal(true);
         createSessionsTableSpy.calledOnce.should.equal(true);
       });
