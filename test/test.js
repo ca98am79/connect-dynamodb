@@ -6,6 +6,7 @@ const {
   CreateTableCommand,
   DeleteTableCommand,
   ScalarAttributeType,
+  GetItemCommand,
 } = require("@aws-sdk/client-dynamodb");
 const ConnectDynamoDB = require(__dirname + "/../lib/connect-dynamodb.js");
 
@@ -41,6 +42,17 @@ describe("DynamoDBStore", () => {
   const store = new DynamoDBStore({
     client: client,
     table: tableName,
+    specialKeys: [
+      {
+        name: "flat",
+        type: "S",
+      },
+      {
+        name: "nested.value",
+        type: "S",
+      },
+    ],
+    skipThrowMissingSpecialKeys: true,
   });
   const sessionId = Math.random().toString();
 
@@ -326,6 +338,56 @@ describe("DynamoDBStore", () => {
         });
       });
     }).timeout(5000);
+  });
+
+  describe("SpecialKeys", () => {
+    const name = Math.random().toString();
+
+    before((done) => {
+      store.set(
+        sessionId,
+        {
+          cookie: {
+            maxAge: 2000,
+          },
+          name,
+          flat: "flatValue",
+          nested: {
+            value: "nestedValue",
+          },
+        },
+        done
+      );
+    });
+
+    it("should get data correctly", async () => {
+      return new Promise((resolve, reject) => {
+        const input = {
+          TableName: tableName,
+          Key: {
+            ["id"]: {
+              S: "sess:" + sessionId,
+            },
+          },
+          ConsistntRead: true,
+        };
+        const command = new GetItemCommand(input);
+        client
+          .send(command)
+          .then((response) => {
+            response["Item"]["nestedValue"].should.eql({ S: "nestedValue" });
+            response["Item"]["flat"].should.eql({ S: "flatValue" });
+
+            resolve();
+          })
+          .catch((err) => reject(err));
+      });
+    });
+
+    it("does not crash on invalid session object", async () => {
+      const session = store.getParsedSession({ Item: {} });
+      should.not.exist(session);
+    }).timeout(4000);
   });
 
   after(async () => {
