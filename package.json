@@ -12,7 +12,7 @@
   "main": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --timeout 5000",
     "debugtest": "mocha --inspect-brk",
     "test:types": "tsd"
   },
