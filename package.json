@@ -12,13 +12,11 @@
   "main": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --timeout 5000",
     "debugtest": "mocha --inspect-brk",
     "test:types": "tsd"
   },
-  "dependencies": {
-    "connect": "*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/express-session": "^1.17.7",
