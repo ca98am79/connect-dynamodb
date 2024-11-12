@@ -1,3 +1,7 @@
+# 3.0.4 / 2024-11-11
+
+- remove connect dependency
+
 # 3.0.3 / 2023-11-27
 
 - add initialized option to disable always checking if the sessions table exists (https://github.com/ca98am79/connect-dynamodb/pull/89), Fix expiry based on TTL; fix error handling of dynamodb:DescribeTable (https://github.com/ca98am79/connect-dynamodb/pull/87) 
