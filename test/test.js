@@ -193,6 +193,44 @@ describe("DynamoDBStore", () => {
         );
       });
     });
+
+    it("should store data correctly with specialKeys option", async () => {
+      const store = new DynamoDBStore({
+        client: client,
+        table: tableName,
+        specialKeys: [
+          { name: 'number_field', type: 'N' }
+        ]
+      });
+      const randomNum = Math.floor(Math.random() * 1000) + 1;
+
+      await new Promise((resolve, reject) => {
+        store.set(
+          sessionId,
+          {
+            cookie: {
+              maxAge: 2000,
+            },
+            number_field: randomNum,
+          },
+          (err) => {
+            if (err) return reject(err);
+            resolve();
+          }
+        );
+      });
+
+      return new Promise((resolve, reject) => {
+        store.get(sessionId, function (err, res) {
+          if (err) return reject(err);
+
+          res.cookie.should.eql({ maxAge: 2000 });
+          res.number_field.should.eql(randomNum);
+
+          resolve();
+        });
+      });
+    });
   });
 
   describe("Getting", () => {
