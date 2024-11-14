@@ -1,3 +1,7 @@
+# 3.0.5 / 2024-11-14
+
+- Fix NUMBER_VALUE cannot be converted to String on specialKeys
+
 # 3.0.4 / 2024-11-11
 
 - remove connect dependency
