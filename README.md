@@ -37,7 +37,7 @@ var options = {
   specialKeys: [
     {
       name: "userId", // The session key
-      type: "S", // The DyanamoDB attribute type
+      type: "S", // The DynamoDB attribute type
     },
   ],
   // Optional skip throw missing special keys in session, if set true
